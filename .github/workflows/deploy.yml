@@ -21,8 +21,7 @@ on:
     - main
 permissions: 
   pages: write
-  content: write
-
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
