@@ -1,98 +1,20 @@
-[use]: https://github.com/Andre601/mkdocs-template/generate
+#This repo is designed to hold content for the GOTO Toastmaster club.
 
-[MkDocs]: https://www.mkdocs.org/
+[9:15 pm, 04/07/2025] Jordan Sands: Do we have a vision for what it would contain?
+[9:20 pm, 04/07/2025] Rob: Probably a link to all the roles, the pitch, the menu booking page, the committee roles and a list of our upcoming meetings so that we dont have to share such long URL's to GDrive documents or eventbrite events. 
 
-[squidfunk]: https://github.com/squidfunk
-[MkDocs Material Theme]: https://github.com/squidfunk/mkdocs-material
+##Roles:
+ - Meeting Roles
+        Every month, the toastmaster has to send out links to the roles for every member taking a role, whether they are experienced or not. This can be a really challenging activity, having to find the Google Doc that was being used, go to the heading for the role and find the hyperlink to then copy and paste in. By having a fixed website to link to, we'll be able to have static human-readable links
+- Committee Roles
+        It can be hard coming into a Toastmaster committee, especially when you dont understand what the specifics of the role entail. By defining our expectations, it helps us to support each other in these roles and not be relying on 1 or 2 people to ensure everything happens. 
 
-[facelessuser]: https://github.com/facelessuser
-[PyMdown Extensions]: https://github.com/facelessuser/pymdown-extensions/
+##Pitch:
+- This is typically sent out by email, again a link to the Google Drive document. It would be far more professional if it was a link to offical website.
 
-[Netlify]: https://netlify.com
+##Menu / Food Ordering
+- Our Menu is held on a Google Sheet, but again having to share a Google sheet link (along with all the other links we send out) can be a bit much. Linking it from here (even though the content is actually the same) would be a more effective solution.
 
-[mkdocs.yml]: https://github.com/Andre601/mkdocs-template/blob/master/mkdocs.yml
-[docs folder]: https://github.com/Andre601/mkdocs-template/blob/master/docs
-[workflow]: https://github.com/Andre601/mkdocs-template/blob/master/.github/workflows/deploy.yml
+##Upcoming Events
+ - Guest can register on Eventbrite for our upcoming meetings, but finding the events requires knowing the URL. This would be a placeholder to all of the upcoming 
 
-[LICENSE]: https://github.com/Andre601/mkdocs-template/blob/master/LICENSE
-
-[gh-pages]: https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-
-# MkDocs Material Template
-This is a template repository for anyone that wants to use the MkDocs Material Theme.
-
-## Getting Started
-To get started, first clone this template by clicking on the Green button labeled [`Use this template`][use].  
-On the new screen, give your repository a name and make sure to check `Include all branches`. This will make sure that the `gh-pages` branch is included, or otherwhise publishing the docs to GitHub Pages could cause errors (See [Troubleshooting](#troubleshooting)).
-
-> **Note**  
-> GitHub changed how you define from where it takes the pages to build. You are now able to define both a branch and a specific folder from where GitHub would take the files to then deploy them on GitHub Pages.  
-> You can read more about this [here][gh-pages].
-
-### Creating pages
-To create new pages, just add new markdown files to the [docs folder] of the repository and edit them.  
-MkDocs will then turn those into static HTML pages once you [build](#build-pages) or [deploy](#deploy-to-github) the pages.
-
-The template also has some pre-made settings for your convenience to help you with creating documentation much easier.  
-In the [mkdocs.yml] will you find many settings that you can alter. Please check the comments and the links they have for more info.
-
-It also contains some extensions that might be useful including:
-
-- Admonition
-- CodeHilite
-- ToC
-- [PyMdown Extensions]
-
-You're free to add, edit or remove any extension at your own discretion, but keep in mind that some expansions might cause compatibility issues with others or require to be downloaded first.  
-For that, alter the `requirements.txt` if you also deploy pages using GitHub Actions or [Netlify](#netlify)
-
-## Build Pages
-To build pages (locally) can you use the `mkdocs build` command in your prefered command prompt.  
-Note that for the successful execution of this command you have to...
-
-- ...be in the folder that contains the `mkdocs.yml`
-- ...have Python 3.7 installed
-- ...have MkDocs and all required dependencies such as Material for MkDocs installed.  
-Note that Material for MkDocs automatically downloads MkDocs and also certain extensions such as the [PyMdown Extensions].
-
-MkDocs would now build the HTML in the defined configuration folder for you to use.
-
-## Deploy to GitHub
-If you want to publish the pages on GitHub Pages can you use the [premade workflow][workflow] for this.  
-This workflow will setup Python, download Material for MkDocs and all its dependencies and deploy the pages to the `gh-pages` branch to then be viewable under `<username>.github.io/<repository>` (unless you defined a specific CNAME through a CNAME file in the [docs folder]).
-
-Note that in order for this to work will you need to have a `gh-pages` branch already made.
-
-## Netlify
-Netlify is an amazing service to build and deploy pages. This template comes with a `runtime.txt` which is used by Netlify to determine the Python version used (They use an old version of Python... Don't ask why).
-
-For more information, please check out their website.
-
-## Dependabot
-The repository contains a `dependabot.yml` file inside the `.github` folder which allows automatic updates through GitHub's Dependabot.  
-It is configured to target both Python dependencies (inside the `requirements.txt`) and GitHub Actions dependencies, to make sure bot are updated accordingly.
-
-Note that it is configured by default to add the `Type: Update (Dependency)` label and also the `Target: Python (pip)` label for Python and `Target: GitHub Actions` label for GitHub Actions Dependencies.  
-Those labels don't exist by default so you have to either create them, or alter the ones in the dependabot.yml (You can also just remove the `labels` sections).
-
-## Troubleshooting
-> **The deploy action gives me an error when deploying. What is the issue?**
-
-There can be many issues but the most common ones are that you either don't have a `gh-pages` branch set or that the `requirements.txt` file is missing or its content is invalid.
-
-> **Can I alter the overall style of the pages?**
-
-Yes. Material for MkDocs supports Theme extensions, meaning you can override specific parts of a theme by providing the particular file in a folder and defining this folder as the `custom_dir` one in the [mkdocs.yml].  
-This template ships with a `theme` folder that can be used for that and you can just uncomment the aforementioned line in the YAML file.
-
-
-## Credits
-A big thank you goes to the following people/groups:
-
-- [MkDocs] for providing the software, to generate documentation.
-- [squidfunk] for the [MkDocs Material Theme].
-- [facelessuser] for the [PyMdown Extensions].
-
-## License
-This template is served under the MIT license.  
-Read the [LICENSE] file for more info.
