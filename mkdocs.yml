@@ -4,7 +4,7 @@ site_author: 'Rob Kenefeck'
 site_url: 'https://www.kenefeck.com/GOTO' # Uncomment to set a canonical URL
 
 copyright: |
-  &copy; Author
+  &copy; GOTO Toastmasters
 docs_dir: docs/
 nav:
   - Welcome: index.md
@@ -15,8 +15,8 @@ theme:
   name: 'material'
   palette:
     scheme: 'slate'
-    primary: 'loyalblue'
-    accent: 'loyalblue'
+    primary: '00455F'
+    accent: '00455F'
   features:
   - navigation.tabs        # Render top sections as tabs at the top.
   - navigation.tabs.sticky # Tabs won't disappear when scrolling down. Requires "navigation.tabs".
