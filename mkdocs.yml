@@ -12,7 +12,6 @@ nav:
   - The Pitch: pitch.md
   - Roles: roles.md
   - Events: events.md
-  - Sign Up:
 theme:
   name: 'material'
   palette:
