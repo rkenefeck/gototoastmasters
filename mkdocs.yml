@@ -25,6 +25,7 @@ theme:
   - navigation.top         # Adds a "Back to top" that is shown when scrolling up.
   - navigation.tracking    # Updates the url with highlighted section anchor.
   - toc.integrate          # Include the TOC sections in the left navugation.
+  logo: "https://ccdn.toastmasters.org/medias/files/brand-materials/loyal-blue-masthead-logo.png"
   icon:
     logo: 'material/library'
     repo: 'material/library'
