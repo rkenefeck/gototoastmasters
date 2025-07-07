@@ -1,0 +1,9 @@
+@import "extensions/tabbed.css";
+
+:root  > * {
+  --md-primary-fg-color:        #004165;
+  --md-primary-fg-color--light: #006094;
+  --md-primary-fg-color--dark:  #004165;
+  --md-text-font: "Montserrat"; 
+}
+
