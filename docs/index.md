@@ -6,8 +6,6 @@ Over the last decade, many of us have honed our skills in corporate Toastmasters
 
 **…On May the 4th 2024 Rob Kenefeck and Leslie Shroot achieved their goal to establish a new Toastmasters dinner club GOTO Toastmasters\!**
 
-### ![][image2]![][image3]
-
 ### About Toastmasters in General
 
 We are a toastmasters club, part of Toastmasters International, a nonprofit educational organisation that teaches public speaking and leadership skills. For more information go to [https://www.toastmasters.org/about/all-about-toastmasters](https://www.toastmasters.org/about/all-about-toastmasters)
