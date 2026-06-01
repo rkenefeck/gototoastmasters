@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join GOTO Toastmasters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Brand tokens ────────────────────────────────────── */
+    :root {
+      --primary:       #004165;
+      --primary-light: #006094;
+      --accent:        #0092d0;
+      --bg:            #f5f7fa;
+      --card:          #ffffff;
+      --text:          #1a1a2e;
+      --muted:         #6b7280;
+      --border:        #d1d5db;
+      --error:         #dc2626;
+      --success:       #16a34a;
+      --radius:        8px;
+      --shadow:        0 2px 16px rgba(0,65,101,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header img { height: 36px; }
+    header h1  { font-size: 1.1rem; font-weight: 700; letter-spacing: .02em; }
+    header p   { font-size: .78rem; opacity: .8; margin-top: 2px; }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 60px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px 44px;
+      width: 100%;
+      max-width: 620px;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .card > p {
+      color: var(--muted);
+      font-size: .875rem;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* ── Form sections ───────────────────────────────────── */
+    .section-title {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 28px 0 16px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title:first-of-type { margin-top: 0; }
+
+    .row { display: flex; gap: 16px; }
+    .row .field { flex: 1; }
+
+    .field {
+      margin-bottom: 18px;
+    }
+    .field label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .field label .req { color: var(--error); margin-left: 2px; }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: .875rem;
+      color: var(--text);
+      background: #fff;
+      transition: border-color .15s;
+      appearance: none;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,146,208,.15);
+    }
+    .field textarea { resize: vertical; min-height: 76px; }
+
+    .field .hint {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    /* ── Conditional fields ──────────────────────────────── */
+    .conditional { display: none; }
+    .conditional.visible { display: block; }
+
+    /* ── Radio / checkbox groups ─────────────────────────── */
+    .radio-group { display: flex; gap: 20px; }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .875rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .radio-group input[type="radio"] {
+      width: 16px; height: 16px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: 16px; height: 16px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+    }
+    .checkbox-row label {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      cursor: pointer;
+    }
+    .checkbox-row label a { color: var(--primary-light); }
+
+    /* ── Submit ──────────────────────────────────────────── */
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      letter-spacing: .02em;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--primary-light); }
+    .btn-submit:active:not(:disabled) { transform: scale(.99); }
+    .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+    /* ── Status messages ─────────────────────────────────── */
+    .msg { display: none; border-radius: var(--radius); padding: 16px 20px; margin-bottom: 20px; font-size: .875rem; line-height: 1.6; }
+    .msg.visible { display: block; }
+    .msg.success { background: #f0fdf4; border: 1.5px solid #86efac; color: #15803d; }
+    .msg.error   { background: #fef2f2; border: 1.5px solid #fca5a5; color: #b91c1c; }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 560px) {
+      .card { padding: 28px 20px; }
+      .row  { flex-direction: column; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://ccdn.toastmasters.org/medias/files/brand-materials/loyal-blue-masthead-logo.png" alt="Toastmasters">
+  <div>
+    <h1>GOTO Toastmasters</h1>
+    <p>Melbourne CBD · Monthly dinner meetings</p>
+  </div>
+</header>
+
+<main>
+  <div class="card">
+    <h2>Join GOTO Toastmasters</h2>
+    <p>Fill in your details below and we'll get you set up. You'll receive a welcome email shortly, and our treasurer will follow up with your membership invoice once it's been reviewed.</p>
+
+    <!-- Status messages -->
+    <div id="msg-success" class="msg success">
+      <strong>You're in! 🎉</strong><br>
+      Welcome to GOTO Toastmasters. Check your inbox — we've sent a welcome email with details on what happens next. See you at the next meeting!
+    </div>
+    <div id="msg-error" class="msg error">
+      <strong>Something went wrong.</strong><br>
+      <span id="error-detail"></span> Please try again or email us at <a href="mailto:goto.toastmasters.committee@gmail.com">goto.toastmasters.committee@gmail.com</a>.
+    </div>
+
+    <form id="join-form" novalidate>
+
+      <!-- Personal details -->
+      <div class="section-title">Your details</div>
+
+      <div class="row">
+        <div class="field">
+          <label for="firstName">First name <span class="req">*</span></label>
+          <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="lastName">Last name <span class="req">*</span></label>
+          <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="preferredName">Preferred name / badge name</label>
+        <input type="text" id="preferredName" name="preferredName" autocomplete="nickname">
+        <p class="hint">Leave blank to use your full name. This is the name that will appear on your badge.</p>
+      </div>
+
+      <div class="field">
+        <label for="email">Email address <span class="req">*</span></label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone / WhatsApp number <span class="req">*</span></label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+        <p class="hint">We'll use this to add you to the club WhatsApp group.</p>
+      </div>
+
+      <!-- Membership -->
+      <div class="section-title">Membership</div>
+
+      <div class="field">
+        <label>Are you an existing Toastmasters International member? <span class="req">*</span></label>
+        <div class="radio-group" style="margin-top:8px">
+          <label><input type="radio" name="isExistingMember" value="false" checked> No — I'm new</label>
+          <label><input type="radio" name="isExistingMember" value="true"> Yes — I'm renewing or transferring</label>
+        </div>
+      </div>
+
+      <div class="field conditional" id="field-tm-id">
+        <label for="tmMemberId">Toastmasters member ID</label>
+        <input type="text" id="tmMemberId" name="tmMemberId" placeholder="e.g. 12345678">
+        <p class="hint">Your TI member number (found on the TI website or your club renewal notice).</p>
+      </div>
+
+      <div class="field">
+        <label>Have you attended a GOTO meeting as a guest before? <span class="req">*</span></label>
+        <div class="radio-group" style="margin-top:8px">
+          <label><input type="radio" name="attendedAsGuest" value="false" checked> No — this will be my first meeting</label>
+          <label><input type="radio" name="attendedAsGuest" value="true"> Yes</label>
+        </div>
+      </div>
+
+      <!-- Dietary & accessibility -->
+      <div class="section-title">Dietary &amp; accessibility</div>
+
+      <div class="field">
+        <label for="dietaryRequirements">Dietary requirements <span class="req">*</span></label>
+        <select id="dietaryRequirements" name="dietaryRequirements">
+          <option value="None">None</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Vegan">Vegan</option>
+          <option value="Kosher">Kosher</option>
+          <option value="Halal">Halal</option>
+          <option value="Gluten-free">Gluten-free</option>
+          <option value="Other">Other (please describe below)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="allergies">Allergies</label>
+        <input type="text" id="allergies" name="allergies" placeholder="e.g. peanuts, shellfish">
+        <p class="hint">List any food allergies so the venue can accommodate you.</p>
+      </div>
+
+      <div class="field">
+        <label for="accessibilityNeeds">Accessibility needs</label>
+        <textarea id="accessibilityNeeds" name="accessibilityNeeds" placeholder="Is there a disability or accessibility requirement we should know about to better accommodate you at our meetings?"></textarea>
+      </div>
+
+      <!-- Terms -->
+      <div class="section-title">Terms</div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="agreeToTerms" name="agreeToTerms" required>
+        <label for="agreeToTerms">
+          I confirm that I am joining GOTO Toastmasters as a member and agree to the
+          <a href="https://www.toastmasters.org/leadership-central/governing-documents" target="_blank" rel="noopener">Toastmasters International policies and procedures</a>.
+          I understand that membership fees are non-refundable once submitted to Toastmasters International.
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Submit membership application</button>
+
+    </form>
+  </div>
+</main>
+
+<footer>
+  &copy; GOTO Toastmasters · Melbourne CBD · <a href="https://goto.kenefeck.com">goto.kenefeck.com</a>
+</footer>
+
+<script>
+  // ── CONFIG ─────────────────────────────────────────────────────────────
+  // Replace with the Apps Script Web App URL after running:
+  //   clasp deploy  (from the script/ folder)
+  //   clasp deployments  (copy the /exec URL)
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwJDm5DcJ3Emm5Q1Gf5mKEzLwZBHcXEetxb1XEGc1Z1q-8hJOdC9mox2LeIG07lP1AnxQ/exec';
+
+  // ── CONDITIONAL FIELDS ─────────────────────────────────────────────────
+  document.querySelectorAll('input[name="isExistingMember"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const show = document.querySelector('input[name="isExistingMember"]:checked').value === 'true';
+      document.getElementById('field-tm-id').classList.toggle('visible', show);
+    });
+  });
+
+  // ── FORM SUBMIT ────────────────────────────────────────────────────────
+  document.getElementById('join-form').addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const form   = e.target;
+    const btn    = document.getElementById('submit-btn');
+    const msgOk  = document.getElementById('msg-success');
+    const msgErr = document.getElementById('msg-error');
+    const errTxt = document.getElementById('error-detail');
+
+    // Basic HTML5 validation
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    if (WEBAPP_URL === 'PASTE_WEBAPP_URL_HERE') {
+      errTxt.textContent = 'Form endpoint not configured. Please contact the committee.';
+      msgErr.classList.add('visible');
+      return;
+    }
+
+    // Build payload
+    const fd = new FormData(form);
+    const payload = {
+      firstName:           fd.get('firstName'),
+      lastName:            fd.get('lastName'),
+      preferredName:       fd.get('preferredName') || '',
+      email:               fd.get('email'),
+      phone:               fd.get('phone'),
+      isExistingMember:    fd.get('isExistingMember') === 'true',
+      tmMemberId:          fd.get('tmMemberId') || '',
+      attendedAsGuest:     fd.get('attendedAsGuest') === 'true',
+      dietaryRequirements: fd.get('dietaryRequirements'),
+      allergies:           fd.get('allergies') || '',
+      accessibilityNeeds:  fd.get('accessibilityNeeds') || '',
+      agreeToTerms:        fd.get('agreeToTerms') === 'on',
+    };
+
+    // Submit
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    msgOk.classList.remove('visible');
+    msgErr.classList.remove('visible');
+
+    try {
+      // Apps Script Web Apps require redirect:follow for POST requests.
+      const res  = await fetch(WEBAPP_URL, {
+        method:   'POST',
+        redirect: 'follow',
+        body:     JSON.stringify(payload),
+      });
+      const json = await res.json();
+
+      if (json.status === 'success') {
+        form.style.display = 'none';
+        msgOk.classList.add('visible');
+      } else {
+        throw new Error(json.message || 'Unknown error from server.');
+      }
+    } catch (err) {
+      errTxt.textContent = err.message + ' ';
+      msgErr.classList.add('visible');
+      btn.disabled    = false;
+      btn.textContent = 'Submit membership application';
+    }
+  });
+</script>
+
+</body>
+</html>
