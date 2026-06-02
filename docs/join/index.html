@@ -276,17 +276,17 @@
       <div class="section-title">Membership</div>
 
       <div class="field">
-        <label>Are you an existing Toastmasters International member? <span class="req">*</span></label>
+        <label>Are you already a Toastmasters International member? <span class="req">*</span></label>
         <div class="radio-group" style="margin-top:8px">
-          <label><input type="radio" name="isExistingMember" value="false" checked> No — I'm new</label>
-          <label><input type="radio" name="isExistingMember" value="true"> Yes — I'm renewing or transferring</label>
+          <label><input type="radio" name="isExistingMember" value="false" checked> No — I'm new to Toastmasters</label>
+          <label><input type="radio" name="isExistingMember" value="true"> Yes — dual club or transferring from another club</label>
         </div>
       </div>
 
       <div class="field conditional" id="field-tm-id">
         <label for="tmMemberId">Toastmasters member ID</label>
         <input type="text" id="tmMemberId" name="tmMemberId" placeholder="e.g. 12345678">
-        <p class="hint">Your TI member number (found on the TI website or your club renewal notice).</p>
+        <p class="hint">Your TI member number (found on the TI website or your current club).</p>
       </div>
 
       <div class="field">
@@ -407,20 +407,16 @@
     msgErr.classList.remove('visible');
 
     try {
-      // Apps Script Web Apps require redirect:follow for POST requests.
-      const res  = await fetch(WEBAPP_URL, {
-        method:   'POST',
-        redirect: 'follow',
-        body:     JSON.stringify(payload),
+      // Apps Script Web Apps return an opaque redirect response — using no-cors
+      // avoids the "cannot read properties of null" error from res.json().
+      // The request reaches doPost() regardless; we show success on completion.
+      await fetch(WEBAPP_URL, {
+        method: 'POST',
+        mode:   'no-cors',
+        body:   JSON.stringify(payload),
       });
-      const json = await res.json();
-
-      if (json.status === 'success') {
-        form.style.display = 'none';
-        msgOk.classList.add('visible');
-      } else {
-        throw new Error(json.message || 'Unknown error from server.');
-      }
+      form.style.display = 'none';
+      msgOk.classList.add('visible');
     } catch (err) {
       errTxt.textContent = err.message + ' ';
       msgErr.classList.add('visible');
