@@ -139,7 +139,7 @@
     .conditional.visible { display: block; }
 
     /* ── Radio / checkbox groups ─────────────────────────── */
-    .radio-group { display: flex; gap: 20px; }
+    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
     .radio-group label {
       display: flex;
       align-items: center;
@@ -227,12 +227,12 @@
 <main>
   <div class="card">
     <h2>Join GOTO Toastmasters</h2>
-    <p>Fill in your details below and we'll get you set up. You'll receive a welcome email shortly, and our treasurer will follow up with your membership invoice once it's been reviewed.</p>
+    <p>Fill in your details below to apply for membership. A committee member will review your application and be in touch shortly with your invoice.</p>
 
     <!-- Status messages -->
     <div id="msg-success" class="msg success">
-      <strong>You're in! 🎉</strong><br>
-      Welcome to GOTO Toastmasters. Check your inbox — we've sent a welcome email with details on what happens next. See you at the next meeting!
+      <strong>Application received!</strong><br>
+      Thanks for applying to GOTO Toastmasters. We've received your application and a committee member will be in touch shortly to confirm your membership and send your invoice.
     </div>
     <div id="msg-error" class="msg error">
       <strong>Something went wrong.</strong><br>
@@ -241,7 +241,7 @@
 
     <form id="join-form" novalidate>
 
-      <!-- Personal details -->
+      <!-- ── Personal details ───────────────────────────── -->
       <div class="section-title">Your details</div>
 
       <div class="row">
@@ -258,7 +258,7 @@
       <div class="field">
         <label for="preferredName">Preferred name / badge name</label>
         <input type="text" id="preferredName" name="preferredName" autocomplete="nickname">
-        <p class="hint">Leave blank to use your full name. This is the name that will appear on your badge.</p>
+        <p class="hint">Leave blank to use your full name. This is the name on your badge and invoice.</p>
       </div>
 
       <div class="field">
@@ -272,21 +272,34 @@
         <p class="hint">We'll use this to add you to the club WhatsApp group.</p>
       </div>
 
-      <!-- Membership -->
-      <div class="section-title">Membership</div>
+      <div class="field">
+        <label for="secondaryEmail">Secondary email for calendar invites</label>
+        <input type="email" id="secondaryEmail" name="secondaryEmail" autocomplete="email">
+        <p class="hint">Optional. If you prefer meeting invites sent to a different address (e.g. work email).</p>
+      </div>
+
+      <!-- ── Toastmasters membership ────────────────────── -->
+      <div class="section-title">Toastmasters membership</div>
 
       <div class="field">
-        <label>Are you already a Toastmasters International member? <span class="req">*</span></label>
+        <label>Have you previously been a Toastmasters International member? <span class="req">*</span></label>
         <div class="radio-group" style="margin-top:8px">
-          <label><input type="radio" name="isExistingMember" value="false" checked> No — I'm new to Toastmasters</label>
-          <label><input type="radio" name="isExistingMember" value="true"> Yes — dual club or transferring from another club</label>
+          <label><input type="radio" name="previouslyTMMember" value="no" checked> No — I'm new to Toastmasters</label>
+          <label><input type="radio" name="previouslyTMMember" value="yes"> Yes — I'm currently or have previously been a TM member</label>
+          <label><input type="radio" name="previouslyTMMember" value="not_sure"> Not sure</label>
         </div>
+        <p class="hint">Existing TM members (dual club or transferring) have a different membership fee. If you're not sure, we'll follow up.</p>
       </div>
 
       <div class="field conditional" id="field-tm-id">
         <label for="tmMemberId">Toastmasters member ID</label>
         <input type="text" id="tmMemberId" name="tmMemberId" placeholder="e.g. 12345678">
-        <p class="hint">Your TI member number (found on the TI website or your current club).</p>
+        <p class="hint">Your TI member number, found on the TI website or your home club.</p>
+      </div>
+
+      <div class="field conditional" id="field-tm-club">
+        <label for="tmClubPrevious">Club(s) you currently belong to or have belonged to</label>
+        <input type="text" id="tmClubPrevious" name="tmClubPrevious" placeholder="e.g. Melbourne Speakers Club">
       </div>
 
       <div class="field">
@@ -297,7 +310,74 @@
         </div>
       </div>
 
-      <!-- Dietary & accessibility -->
+      <!-- ── Joining details ────────────────────────────── -->
+      <div class="section-title">Joining details</div>
+
+      <div class="field">
+        <label for="joinMonth">Month I would like to join <span class="req">*</span></label>
+        <select id="joinMonth" name="joinMonth" required>
+          <!-- Options populated by JS on page load -->
+        </select>
+        <p class="hint">Used to calculate your membership fee for the current period.</p>
+      </div>
+
+      <div class="field">
+        <label>Badge preference <span class="req">*</span></label>
+        <div class="radio-group" style="margin-top:8px">
+          <label><input type="radio" name="badgePreference" value="Magnetic" checked> Magnetic</label>
+          <label><input type="radio" name="badgePreference" value="Pin"> Pin</label>
+        </div>
+      </div>
+
+      <!-- ── Billing address ────────────────────────────── -->
+      <div class="section-title">Billing details</div>
+
+      <div class="field">
+        <label>Invoice made out to <span class="req">*</span></label>
+        <div class="radio-group" style="margin-top:8px">
+          <label><input type="radio" name="invoiceBilledTo" value="personal" checked> Personal name</label>
+          <label><input type="radio" name="invoiceBilledTo" value="company"> Company / organisation</label>
+        </div>
+      </div>
+
+      <div class="field conditional" id="field-company-name">
+        <label for="companyName">Company / organisation name <span class="req">*</span></label>
+        <input type="text" id="companyName" name="companyName" autocomplete="organization">
+      </div>
+
+      <div class="field">
+        <label for="addressLine1">Address line 1 <span class="req">*</span></label>
+        <input type="text" id="addressLine1" name="addressLine1" autocomplete="address-line1" required placeholder="Street address">
+      </div>
+
+      <div class="field">
+        <label for="addressLine2">Address line 2</label>
+        <input type="text" id="addressLine2" name="addressLine2" autocomplete="address-line2" placeholder="Apartment, suite, unit, etc.">
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="addressCity">City / suburb <span class="req">*</span></label>
+          <input type="text" id="addressCity" name="addressCity" autocomplete="address-level2" required>
+        </div>
+        <div class="field" style="max-width:140px">
+          <label for="addressState">State <span class="req">*</span></label>
+          <input type="text" id="addressState" name="addressState" autocomplete="address-level1" required placeholder="VIC">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="addressCountry">Country <span class="req">*</span></label>
+          <input type="text" id="addressCountry" name="addressCountry" autocomplete="country-name" required value="Australia">
+        </div>
+        <div class="field" style="max-width:140px">
+          <label for="addressPostcode">Postcode <span class="req">*</span></label>
+          <input type="text" id="addressPostcode" name="addressPostcode" autocomplete="postal-code" required inputmode="numeric">
+        </div>
+      </div>
+
+      <!-- ── Dietary & accessibility ────────────────────── -->
       <div class="section-title">Dietary &amp; accessibility</div>
 
       <div class="field">
@@ -321,10 +401,29 @@
 
       <div class="field">
         <label for="accessibilityNeeds">Accessibility needs</label>
-        <textarea id="accessibilityNeeds" name="accessibilityNeeds" placeholder="Is there a disability or accessibility requirement we should know about to better accommodate you at our meetings?"></textarea>
+        <textarea id="accessibilityNeeds" name="accessibilityNeeds" placeholder="Is there a disability or accessibility requirement we should know about?"></textarea>
       </div>
 
-      <!-- Terms -->
+      <!-- ── Optional / how did you find us ────────────── -->
+      <div class="section-title">A little more about you (optional)</div>
+
+      <div class="field">
+        <label for="easySpeak">Easy-Speak ID</label>
+        <input type="text" id="easySpeak" name="easySpeak" placeholder="e.g. 123456">
+        <p class="hint">If you already have an Easy-Speak account, enter your user ID so we can link it.</p>
+      </div>
+
+      <div class="field">
+        <label for="referralSource">How did you find out about GOTO Toastmasters?</label>
+        <input type="text" id="referralSource" name="referralSource" placeholder="e.g. LinkedIn, a friend, a GOTO event…">
+      </div>
+
+      <div class="field">
+        <label for="referredBy">Who encouraged you to join?</label>
+        <input type="text" id="referredBy" name="referredBy" placeholder="Name of the member who referred you">
+      </div>
+
+      <!-- ── Terms ──────────────────────────────────────── -->
       <div class="section-title">Terms</div>
 
       <div class="checkbox-row">
@@ -348,16 +447,41 @@
 
 <script>
   // ── CONFIG ─────────────────────────────────────────────────────────────
-  // Replace with the Apps Script Web App URL after running:
-  //   clasp deploy  (from the script/ folder)
-  //   clasp deployments  (copy the /exec URL)
   const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwJDm5DcJ3Emm5Q1Gf5mKEzLwZBHcXEetxb1XEGc1Z1q-8hJOdC9mox2LeIG07lP1AnxQ/exec';
 
-  // ── CONDITIONAL FIELDS ─────────────────────────────────────────────────
-  document.querySelectorAll('input[name="isExistingMember"]').forEach(r => {
+  // ── POPULATE JOIN MONTH SELECT ─────────────────────────────────────────
+  (function populateJoinMonths() {
+    const sel = document.getElementById('joinMonth');
+    const now = new Date();
+    for (let i = 0; i < 9; i++) {
+      const d     = new Date(now.getFullYear(), now.getMonth() + i, 1);
+      const value = d.toISOString().slice(0, 7); // 'YYYY-MM'
+      const label = d.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
+      const opt   = document.createElement('option');
+      opt.value   = value;
+      opt.textContent = label;
+      if (i === 0) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  })();
+
+  // ── CONDITIONAL: previouslyTMMember ────────────────────────────────────
+  document.querySelectorAll('input[name="previouslyTMMember"]').forEach(r => {
+    r.addEventListener('change', updateTMFields);
+  });
+  function updateTMFields() {
+    const val = document.querySelector('input[name="previouslyTMMember"]:checked').value;
+    // TM ID: show for 'yes' or 'not_sure'
+    document.getElementById('field-tm-id').classList.toggle('visible', val === 'yes' || val === 'not_sure');
+    // TM club: show for 'yes' only
+    document.getElementById('field-tm-club').classList.toggle('visible', val === 'yes');
+  }
+
+  // ── CONDITIONAL: invoiceBilledTo ───────────────────────────────────────
+  document.querySelectorAll('input[name="invoiceBilledTo"]').forEach(r => {
     r.addEventListener('change', () => {
-      const show = document.querySelector('input[name="isExistingMember"]:checked').value === 'true';
-      document.getElementById('field-tm-id').classList.toggle('visible', show);
+      const isCompany = document.querySelector('input[name="invoiceBilledTo"]:checked').value === 'company';
+      document.getElementById('field-company-name').classList.toggle('visible', isCompany);
     });
   });
 
@@ -371,45 +495,82 @@
     const msgErr = document.getElementById('msg-error');
     const errTxt = document.getElementById('error-detail');
 
-    // Basic HTML5 validation
+    // HTML5 validation
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    if (WEBAPP_URL === 'PASTE_WEBAPP_URL_HERE') {
-      errTxt.textContent = 'Form endpoint not configured. Please contact the committee.';
+    // Manual validation: badge preference (radio with default, always set)
+    const badgePref = document.querySelector('input[name="badgePreference"]:checked');
+    if (!badgePref) {
+      errTxt.textContent = 'Please select a badge preference.';
       msgErr.classList.add('visible');
       return;
     }
 
-    // Build payload
+    // Company name required if company billing selected
+    const billedTo = document.querySelector('input[name="invoiceBilledTo"]:checked').value;
+    if (billedTo === 'company' && !document.getElementById('companyName').value.trim()) {
+      document.getElementById('companyName').focus();
+      errTxt.textContent = 'Please enter a company or organisation name.';
+      msgErr.classList.add('visible');
+      return;
+    }
+
     const fd = new FormData(form);
+
     const payload = {
-      firstName:           fd.get('firstName'),
-      lastName:            fd.get('lastName'),
-      preferredName:       fd.get('preferredName') || '',
-      email:               fd.get('email'),
-      phone:               fd.get('phone'),
-      isExistingMember:    fd.get('isExistingMember') === 'true',
-      tmMemberId:          fd.get('tmMemberId') || '',
-      attendedAsGuest:     fd.get('attendedAsGuest') === 'true',
+      // Personal
+      firstName:          fd.get('firstName'),
+      lastName:           fd.get('lastName'),
+      preferredName:      fd.get('preferredName') || '',
+      email:              fd.get('email'),
+      phone:              fd.get('phone'),
+      secondaryEmail:     fd.get('secondaryEmail') || '',
+
+      // Membership
+      previouslyTMMember: fd.get('previouslyTMMember'),
+      tmMemberId:         fd.get('tmMemberId') || '',
+      tmClubPrevious:     fd.get('tmClubPrevious') || '',
+      attendedAsGuest:    fd.get('attendedAsGuest') === 'true',
+
+      // Joining
+      joinMonth:          fd.get('joinMonth'),
+      badgePreference:    fd.get('badgePreference'),
+
+      // Billing
+      invoiceBilledTo:    fd.get('invoiceBilledTo') || 'personal',
+      companyName:        fd.get('companyName') || '',
+      addressLine1:       fd.get('addressLine1'),
+      addressLine2:       fd.get('addressLine2') || '',
+      addressCity:        fd.get('addressCity'),
+      addressState:       fd.get('addressState'),
+      addressCountry:     fd.get('addressCountry') || 'Australia',
+      addressPostcode:    fd.get('addressPostcode'),
+
+      // Dietary
       dietaryRequirements: fd.get('dietaryRequirements'),
       allergies:           fd.get('allergies') || '',
       accessibilityNeeds:  fd.get('accessibilityNeeds') || '',
-      agreeToTerms:        fd.get('agreeToTerms') === 'on',
+
+      // Optional
+      easySpeak:          fd.get('easySpeak') || '',
+      referralSource:     fd.get('referralSource') || '',
+      referredBy:         fd.get('referredBy') || '',
+
+      // Terms
+      agreeToTerms:       fd.get('agreeToTerms') === 'on',
     };
 
-    // Submit
-    btn.disabled = true;
+    btn.disabled    = true;
     btn.textContent = 'Submitting…';
     msgOk.classList.remove('visible');
     msgErr.classList.remove('visible');
 
     try {
-      // Apps Script Web Apps return an opaque redirect response — using no-cors
-      // avoids the "cannot read properties of null" error from res.json().
-      // The request reaches doPost() regardless; we show success on completion.
+      // Apps Script Web Apps return an opaque redirect — no-cors avoids the
+      // 'cannot read response' error. The request reaches doPost regardless.
       await fetch(WEBAPP_URL, {
         method: 'POST',
         mode:   'no-cors',
