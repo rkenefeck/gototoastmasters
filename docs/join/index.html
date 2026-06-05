@@ -423,6 +423,12 @@
         <input type="text" id="referredBy" name="referredBy" placeholder="Name of the member who referred you">
       </div>
 
+      <div class="field">
+        <label for="linkedinUrl">LinkedIn profile URL</label>
+        <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/yourname">
+        <p class="hint">Optional. Helps the committee verify your identity and connect with you.</p>
+      </div>
+
       <!-- ── Terms ──────────────────────────────────────── -->
       <div class="section-title">Terms</div>
 
@@ -558,6 +564,7 @@
       easySpeak:          fd.get('easySpeak') || '',
       referralSource:     fd.get('referralSource') || '',
       referredBy:         fd.get('referredBy') || '',
+      linkedinUrl:        fd.get('linkedinUrl') || '',
 
       // Terms
       agreeToTerms:       fd.get('agreeToTerms') === 'on',

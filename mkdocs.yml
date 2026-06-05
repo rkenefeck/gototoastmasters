@@ -12,6 +12,7 @@ nav:
   - Roles: roles.md
   - Events: events.md
   - Join: join/index.html
+  - Onboarding Hub: onboarding/index.html
 theme:
   name: 'material'
   palette:
