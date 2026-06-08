@@ -1082,15 +1082,25 @@ async function dismissError(rowNumber) {
  * Throws on network error; callers should check result.error for app errors.
  */
 async function hubPost(body) {
-  body.token = idToken;
-  const res = await fetch(WEBAPP_URL, {
+  body.idToken = idToken;
+  const resp = await fetch(WEBAPP_URL, {
     method:  'POST',
     mode:    'cors',
-    headers: { 'Content-Type': 'text/plain' }, // avoids CORS preflight on Apps Script
+    // text/plain;charset=utf-8 is a "simple" CORS request — no preflight OPTIONS.
+    // Apps Script /exec cannot respond to OPTIONS, so non-simple requests fail.
+    // The response already carries Access-Control-Allow-Origin: * so it is readable.
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body:    JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`Server error ${res.status}`);
-  return res.json();
+  if (!resp.ok) throw new Error('Apps Script returned HTTP ' + resp.status);
+  const result = await resp.json();
+  // A2: expired token — force re-sign-in rather than showing a raw auth error.
+  if (result.error === 'AUTH_EXPIRED') {
+    signOut();
+    showError('Session expired — please sign in again.');
+    throw new Error('AUTH_EXPIRED');
+  }
+  return result;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
