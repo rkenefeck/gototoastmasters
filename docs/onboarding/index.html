@@ -563,8 +563,12 @@ async function loadAllData() {
 
     updateBadges();
   } catch (err) {
-    if (err.message !== 'Not committee') {
-      showError('Failed to load hub data: ' + err.message);
+    // GAPI errors are response objects, not Error instances — extract the real message.
+    const gapiMsg = err?.result?.error?.message || err?.body && JSON.parse(err.body)?.error?.message;
+    const msg = gapiMsg || err?.message || JSON.stringify(err);
+    if (msg !== 'Not committee') {
+      console.error('[loadAllData] error:', err);
+      showError('Failed to load hub data: ' + msg);
     }
     hideLoading();
     return;
