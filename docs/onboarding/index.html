@@ -7,9 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Google API client (Sheets API) -->
-  <script src="https://apis.google.com/js/api.js" async defer onload="gapiLoaded()"></script>
-  <!-- Google Identity Services -->
+  <!-- Google Identity Services (ID token / One Tap) -->
   <script src="https://accounts.google.com/gsi/client" async defer onload="gisLoaded()"></script>
 
   <style>
@@ -387,6 +385,9 @@
     <a class="nav-link" onclick="showView('dietary')" id="nav-dietary">
       <span>Dietary</span>
     </a>
+    <a class="nav-link" onclick="showView('education')" id="nav-education">
+      <span>Education</span>
+    </a>
     <a class="nav-link" onclick="showView('errors')" id="nav-errors">
       <span>Errors</span>
       <span class="badge" id="badge-errors" style="display:none">0</span>
@@ -406,110 +407,79 @@
 // CONFIG
 // ══════════════════════════════════════════════════════════════════════════════
 
-// TODO: Replace with your Google Cloud OAuth 2.0 Client ID.
-// Create at https://console.cloud.google.com → APIs & Services → Credentials
-// → Create Credentials → OAuth client ID → Web application
-// Add https://gototoastmasters.com.au as an Authorised JavaScript origin.
+// Google Cloud OAuth 2.0 Client ID (public — no secret here).
+// Add https://gototoastmasters.com.au as an Authorised JavaScript origin in
+// Google Cloud Console → APIs & Services → Credentials.
 const GOOGLE_CLIENT_ID = '303221448159-6i35t5bc5k5ukncm1lj36u3qb2731j2d.apps.googleusercontent.com';
 
-const SHEET_ID  = '1PSH2PuwmqhXxDKnlCw2XrV3aHjZpVgqXdYk16gveRho';
+// Apps Script web app endpoint (doPost).  No sheet ID or OAuth scopes needed
+// client-side — all data access happens server-side via the ID token.
 const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwJDm5DcJ3Emm5Q1Gf5mKEzLwZBHcXEetxb1XEGc1Z1q-8hJOdC9mox2LeIG07lP1AnxQ/exec';
-
-const SCOPES = 'https://www.googleapis.com/auth/spreadsheets email profile';
 
 // ══════════════════════════════════════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════════════════════════════════════
 
-let gapiReady = false;
-let gisReady  = false;
-let tokenClient;
-let accessToken   = null;
-let currentUser   = null;
-let currentView   = 'dashboard';
+let idToken     = null;   // Google ID token (JWT) from One Tap sign-in
+let currentUser = null;   // { email, name } parsed from the ID token
+let currentView = 'dashboard';
 
 // Cached sheet data
-let memberList    = []; // array of objects
-let memberHeaders = [];
+let memberList     = []; // array of objects
+let memberHeaders  = [];
 let onboardingList = [];
-let dietaryList   = [];
-let errorsList    = [];
-let invoicesList  = [];
-let meetingsList  = [];
+let dietaryList    = [];
+let educationList  = [];
+let errorsList     = [];
+let invoicesList   = [];
+let meetingsList   = [];
 
 // ══════════════════════════════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════════════════════════════
 
-function gapiLoaded() {
-  gapi.load('client', async () => {
-    await gapi.client.init({
-      discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-    });
-    gapiReady = true;
-    maybeRender();
-  });
-}
-
+/**
+ * Called when the GIS library loads.
+ * We only need One Tap / Sign-In with Google for an ID token.
+ * No OAuth access token or GAPI required — all sheet access is server-side.
+ */
 function gisLoaded() {
-  tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: GOOGLE_CLIENT_ID,
-    scope: SCOPES,
-    callback: async (resp) => {
-      // 'interaction_required' / 'access_denied' means no prior grant exists.
-      // Retry with explicit prompt so the user can approve the Sheets scope.
-      if (resp.error === 'interaction_required' || resp.error === 'access_denied') {
-        tokenClient.requestAccessToken({ prompt: 'consent' });
-        return;
-      }
-      if (resp.error) { showDenied(); return; }
-
-      accessToken = resp.access_token;
-      gapi.client.setToken({ access_token: accessToken });
-      await loadAllData();
-
-      // loadAllData sets currentUser on success; stays null on error / non-committee.
-      if (currentUser) {
-        document.getElementById('login-view').style.display = 'none';
-        document.getElementById('app-view').style.display   = 'block';
-        showView('dashboard');
-      }
-    },
-  });
-
-  // Render the sign-in button
   google.accounts.id.initialize({
     client_id: GOOGLE_CLIENT_ID,
     callback: handleCredentialResponse,
+    auto_select: false,
   });
   google.accounts.id.renderButton(
     document.getElementById('g_id_signin'),
     { theme: 'outline', size: 'large', width: 280 }
   );
-
-  gisReady = true;
-  maybeRender();
+  hideLoading();
 }
 
-function maybeRender() {
-  if (gapiReady && gisReady) {
-    hideLoading();
-  }
-}
+/**
+ * Called immediately when the user clicks "Sign in with Google".
+ * `response.credential` is a signed JWT (ID token).
+ */
+async function handleCredentialResponse(response) {
+  idToken = response.credential;
+  // Parse the JWT payload (base64url-encoded middle segment) — no network call.
+  const payload = JSON.parse(atob(idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+  currentUser   = { email: payload.email, name: payload.name || '' };
 
-// Called when user clicks Google Sign In button
-function handleCredentialResponse(response) {
-  // ID token received — now request an OAuth access token for the Sheets API.
-  // prompt: '' (default) lets GIS show the consent screen if not yet granted.
-  // prompt: 'none' silently fails on first use and never calls the callback.
   showLoading('Signing in…');
-  tokenClient.requestAccessToken({ prompt: '' });
+  await loadAllData();
+
+  // loadAllData clears currentUser on auth failure; only show app if still set.
+  if (currentUser) {
+    document.getElementById('login-view').style.display = 'none';
+    document.getElementById('app-view').style.display   = 'block';
+    showView('dashboard');
+  }
 }
 
 function signOut() {
   google.accounts.id.disableAutoSelect();
-  gapi.client.setToken(null);
-  accessToken = null;
+  idToken     = null;
   currentUser = null;
   document.getElementById('app-view').style.display   = 'none';
   document.getElementById('login-view').style.display = 'flex';
@@ -528,44 +498,42 @@ function showDenied() {
 async function loadAllData() {
   showLoading('Loading hub data…');
   try {
-    const [mlRaw, onbRaw, dietRaw, errRaw, invRaw, meetRaw] = await Promise.all([
-      sheetsRead("'Member List'"),
-      sheetsRead("'Onboarding'"),
-      sheetsRead("'Dietary'"),
-      sheetsRead("'Errors'"),
-      sheetsRead("'Invoices'"),
-      sheetsRead("'Meetings'"),
-    ]);
+    // Single server-side call — Apps Script reads all sheets and verifies
+    // committee membership before returning data.
+    const result = await hubPost({ action: 'getAll' });
+
+    if (result.error) {
+      // 'Access denied' means the user is not a committee member.
+      const isAccessDenied = result.error.toLowerCase().includes('access denied');
+      if (isAccessDenied) { showDenied(); currentUser = null; }
+      else { showError('Failed to load hub data: ' + result.error); currentUser = null; }
+      hideLoading();
+      return;
+    }
+
+    const d = result.data || {};
+    const mlRaw   = d['Member List'] || [];
+    const onbRaw  = d['Onboarding']  || [];
+    const dietRaw = d['Dietary']     || [];
+    const eduRaw  = d['Education']   || [];
+    const errRaw  = d['Errors']      || [];
+    const invRaw  = d['Invoices']    || [];
+    const meetRaw = d['Meetings']    || [];
 
     memberHeaders  = mlRaw[0] || [];
     memberList     = rowsToObjects(mlRaw);
     onboardingList = rowsToObjects(onbRaw);
     dietaryList    = rowsToObjects(dietRaw);
+    educationList  = rowsToObjects(eduRaw);
     errorsList     = rowsToObjects(errRaw);
     invoicesList   = rowsToObjects(invRaw);
     meetingsList   = rowsToObjects(meetRaw);
 
-    // Resolve current user from access token
-    const me = await gapi.client.request({ path: 'https://www.googleapis.com/oauth2/v2/userinfo' });
-    currentUser = me.result;
-
-    // Verify committee access
-    const email = currentUser.email.toLowerCase();
-    const today = new Date();
-    const isCommittee = memberList.some(m => {
-      if ((m.email || '').toLowerCase() !== email) return false;
-      if (!m.committee_role || !m.committee_role.toString().trim()) return false;
-      if (!m.committee_role_end) return true;
-      const end = new Date(m.committee_role_end);
-      return isNaN(end.getTime()) || end >= today;
-    });
-    if (!isCommittee) { showDenied(); throw new Error('Not committee'); }
-
     updateBadges();
   } catch (err) {
-    if (err.message !== 'Not committee') {
-      showError('Failed to load hub data: ' + err.message);
-    }
+    console.error('[loadAllData] error:', err);
+    showError('Failed to load hub data: ' + (err.message || String(err)));
+    currentUser = null;
     hideLoading();
     return;
   }
@@ -593,6 +561,7 @@ function showView(view, data) {
     case 'members':     main.innerHTML = renderMembers();     break;
     case 'member-detail': main.innerHTML = renderMemberDetail(data); break;
     case 'dietary':     main.innerHTML = renderDietary();     break;
+    case 'education':   main.innerHTML = renderEducation();   break;
     case 'errors':      main.innerHTML = renderErrors();      break;
     default: main.innerHTML = '<p>View not found.</p>';
   }
@@ -943,6 +912,50 @@ function renderDietary() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// EDUCATION VIEW
+// ══════════════════════════════════════════════════════════════════════════════
+
+function renderEducation() {
+  const active = memberList.filter(m => norm(m.status) === 'active');
+  const rows   = active.map(m => {
+    const edu = educationList.find(e =>
+      (e.member_email || '').toLowerCase() === (m.email || '').toLowerCase()
+    ) || {};
+    const name = m.invoicename || ((m.first || '') + ' ' + (m.last || '')).trim();
+    return `<tr>
+      <td>${esc(name)}</td>
+      <td>${esc(edu.edu_objectives || '—')}</td>
+      <td>${esc(edu.main_edu_path || '—')}</td>
+      <td style="text-align:center">${esc(edu.levels_to_complete || '—')}</td>
+      <td>${esc(edu.basecamp_progress || '—')}</td>
+      <td>${esc(edu.easy_speak_progress || '—')}</td>
+      <td>${esc(edu.levels_achieved || '—')}</td>
+      <td>${esc(edu.next_slot || '—')}</td>
+    </tr>`;
+  });
+
+  return `
+    <div class="card">
+      <h2>Education — Active Members (${active.length})</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>Name</th>
+            <th>Objectives</th>
+            <th>Path</th>
+            <th style="text-align:center">Levels to Go</th>
+            <th>Basecamp</th>
+            <th>Easy-Speak</th>
+            <th>Levels Achieved</th>
+            <th>Next Slot</th>
+          </tr></thead>
+          <tbody>${rows.join('') || '<tr><td colspan="8" style="color:var(--muted);text-align:center;padding:24px">No active members.</td></tr>'}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // ERRORS VIEW
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -984,7 +997,8 @@ async function approveAndSend(email) {
   if (!confirm(`Approve this application and send invoice to ${email}?`)) return;
   showLoading('Sending invoice…');
   try {
-    await hubPost({ action: 'approveAndSendInvoice', memberEmail: email });
+    const result = await hubPost({ action: 'approveAndSendInvoice', memberEmail: email });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     showView('members');
     showToast('Invoice sent successfully.');
@@ -998,7 +1012,8 @@ async function rejectMember(email) {
   if (!confirm(`Reject ${email}? (You will contact them personally.)`)) return;
   showLoading('Rejecting…');
   try {
-    await hubPost({ action: 'rejectMember', memberEmail: email });
+    const result = await hubPost({ action: 'rejectMember', memberEmail: email });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     showView('members');
     showToast('Member rejected.');
@@ -1013,18 +1028,8 @@ async function markPaid(email) {
   if (!dateStr) return;
   showLoading('Updating…');
   try {
-    const member = memberList.find(m => (m.email || '') === email);
-    if (!member) throw new Error('Member not found.');
-
-    // Write Invoice Paid Date to Member List via Sheets API
-    await writeMemberField(member._rowNumber, 'Invoice Paid Date', parseDate(dateStr));
-
-    // Transition to Active if not already
-    if (norm(member.status) === 'invoiced') {
-      await writeMemberField(member._rowNumber, 'Status', 'Active');
-    }
-
-    await writeAuditLog('Mark as Paid', email, `Invoice Paid Date: ${dateStr}`);
+    const result = await hubPost({ action: 'markPaid', memberEmail: email, date: dateStr });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     openMember(email);
     showToast('Paid date recorded.');
@@ -1039,11 +1044,8 @@ async function markTISubmitted(email) {
   if (!dateStr) return;
   showLoading('Updating…');
   try {
-    const member = memberList.find(m => (m.email || '') === email);
-    if (!member) throw new Error('Member not found.');
-
-    await writeMemberField(member._rowNumber, 'TI Payment Submitted', parseDate(dateStr));
-    await writeAuditLog('TI Payment Submitted', email, `Date: ${dateStr}`);
+    const result = await hubPost({ action: 'markTISubmitted', memberEmail: email, date: dateStr });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     openMember(email);
     showToast('TI payment date recorded.');
@@ -1056,23 +1058,8 @@ async function markTISubmitted(email) {
 async function markChecklistStep(email, key, colName) {
   showLoading('Updating…');
   try {
-    // Write to Onboarding tab
-    const onbRow = onboardingList.find(o =>
-      (o.member_email || '').toLowerCase() === email.toLowerCase()
-    );
-    if (onbRow) {
-      const onbSheet = "'Onboarding'";
-      const colIdx   = await getColumnIndex(onbSheet, colName);
-      if (colIdx >= 0) {
-        await sheetsWrite(`'Onboarding'!${colLetter(colIdx)}${onbRow._rowNumber}`, [[todayAu()]]);
-      }
-    }
-    // If completing onboarding, mark Onboarding Complete = TRUE in Member List
-    if (key === 'onboarding_complete') {
-      const member = memberList.find(m => (m.email || '') === email);
-      if (member) await writeMemberField(member._rowNumber, 'Onboarding Complete', true);
-    }
-    await writeAuditLog('Checklist: ' + colName, email, '');
+    const result = await hubPost({ action: 'markChecklistStep', memberEmail: email, key, colName });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     openMember(email);
   } catch (err) {
@@ -1089,7 +1076,8 @@ async function reinstateFlow(email) {
   if (!month) return;
   showLoading('Reinstating…');
   try {
-    await hubPost({ action: 'reinstate', memberEmail: email, joiningMonth: month });
+    const result = await hubPost({ action: 'reinstate', memberEmail: email, joiningMonth: month });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     openMember(email);
     showToast('Renewal invoice generated. Review and send when ready.');
@@ -1103,7 +1091,8 @@ async function sendRenewalInvoice(email) {
   if (!confirm(`Send renewal invoice to ${email}?`)) return;
   showLoading('Sending…');
   try {
-    await hubPost({ action: 'sendRenewalInvoice', memberEmail: email });
+    const result = await hubPost({ action: 'sendRenewalInvoice', memberEmail: email });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     openMember(email);
     showToast('Renewal invoice sent.');
@@ -1120,12 +1109,8 @@ async function generateInvoiceFlow(email) {
 async function dismissError(rowNumber) {
   showLoading('Dismissing…');
   try {
-    const errSheet = "'Errors'";
-    const errHeaders = await getSheetHeaders(errSheet);
-    const byCol = errHeaders.map(h => h.replace(/\W+/g, '_').toLowerCase()).indexOf('reviewed_by');
-    const atCol = errHeaders.map(h => h.replace(/\W+/g, '_').toLowerCase()).indexOf('reviewed_at');
-    if (byCol >= 0) await sheetsWrite(`'Errors'!${colLetter(byCol)}${rowNumber}`, [[currentUser.email]]);
-    if (atCol >= 0) await sheetsWrite(`'Errors'!${colLetter(atCol)}${rowNumber}`, [[new Date().toISOString()]]);
+    const result = await hubPost({ action: 'dismissError', rowNumber });
+    if (result.error) throw new Error(result.error);
     await refreshData();
     showView('errors');
     showToast('Error dismissed.');
@@ -1136,83 +1121,37 @@ async function dismissError(rowNumber) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// SHEETS API HELPERS
-// ══════════════════════════════════════════════════════════════════════════════
-
-async function sheetsRead(range) {
-  const r = await gapi.client.sheets.spreadsheets.values.get({
-    spreadsheetId: SHEET_ID,
-    range: range,
-    valueRenderOption: 'UNFORMATTED_VALUE',
-  });
-  return r.result.values || [];
-}
-
-async function sheetsWrite(range, values) {
-  await gapi.client.sheets.spreadsheets.values.update({
-    spreadsheetId: SHEET_ID,
-    range: range,
-    valueInputOption: 'USER_ENTERED',
-  }, { values });
-}
-
-async function sheetsAppend(range, values) {
-  await gapi.client.sheets.spreadsheets.values.append({
-    spreadsheetId: SHEET_ID,
-    range: range,
-    valueInputOption: 'USER_ENTERED',
-    insertDataOption: 'INSERT_ROWS',
-  }, { values });
-}
-
-// Write a named column in 'Member List' for a specific row
-async function writeMemberField(rowNumber, columnName, value) {
-  const idx = memberHeaders.map(h => h.trim()).indexOf(columnName);
-  if (idx < 0) throw new Error(`Column "${columnName}" not found in Member List.`);
-  await sheetsWrite(`'Member List'!${colLetter(idx)}${rowNumber}`, [[value]]);
-}
-
-async function getSheetHeaders(sheetRange) {
-  const rows = await sheetsRead(sheetRange + '!1:1');
-  return (rows[0] || []);
-}
-
-async function getColumnIndex(sheetRange, colName) {
-  const headers = await getSheetHeaders(sheetRange);
-  return headers.indexOf(colName);
-}
-
-async function writeAuditLog(action, targetEmail, notes) {
-  await sheetsAppend("'Audit Log'!A:G", [[
-    new Date().toISOString(),
-    currentUser ? currentUser.email : '',
-    action,
-    targetEmail,
-    notes || '',
-    '',
-    '',
-  ]]);
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// HUB APPS SCRIPT CALL (fire-and-forget with response polling)
+// HUB APPS SCRIPT CALL
 // ══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Calls the Apps Script hub endpoint.
- * Uses no-cors (can't read response), then polls for the expected state change.
+ * Calls the Apps Script hub endpoint with CORS and returns the parsed JSON.
  *
- * For actions that need response confirmation, use hubPost with a poll check.
+ * Every request includes the current ID token so the server can verify
+ * the caller's identity without any client-side sheet access.
+ *
+ * Throws on network error; callers should check result.error for app errors.
  */
 async function hubPost(body) {
-  body.token = accessToken;
-  await fetch(WEBAPP_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify(body),
+  body.idToken = idToken;
+  const resp = await fetch(WEBAPP_URL, {
+    method:  'POST',
+    mode:    'cors',
+    // text/plain;charset=utf-8 is a "simple" CORS request — no preflight OPTIONS.
+    // Apps Script /exec cannot respond to OPTIONS, so non-simple requests fail.
+    // The response already carries Access-Control-Allow-Origin: * so it is readable.
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body:    JSON.stringify(body),
   });
-  // Allow time for Apps Script to process
-  await new Promise(r => setTimeout(r, 3000));
+  if (!resp.ok) throw new Error('Apps Script returned HTTP ' + resp.status);
+  const result = await resp.json();
+  // A2: expired token — force re-sign-in rather than showing a raw auth error.
+  if (result.error === 'AUTH_EXPIRED') {
+    signOut();
+    showError('Session expired — please sign in again.');
+    throw new Error('AUTH_EXPIRED');
+  }
+  return result;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -1275,17 +1214,6 @@ function currentPeriodStart() {
 function norm(v) { return (v || '').toString().trim().toLowerCase(); }
 function esc(s)  { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-function colLetter(idx) {
-  // Convert 0-based column index to A1 letter (handles A-Z, AA-AZ, etc.)
-  let l = '';
-  idx = idx + 1;
-  while (idx > 0) {
-    const rem = (idx - 1) % 26;
-    l = String.fromCharCode(65 + rem) + l;
-    idx = Math.floor((idx - 1) / 26);
-  }
-  return l;
-}
 
 function showLoading(text) {
   document.getElementById('loading-text').textContent = text || 'Loading…';
