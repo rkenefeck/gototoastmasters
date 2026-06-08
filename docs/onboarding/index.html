@@ -409,7 +409,7 @@
 // TODO: Replace with your Google Cloud OAuth 2.0 Client ID.
 // Create at https://console.cloud.google.com → APIs & Services → Credentials
 // → Create Credentials → OAuth client ID → Web application
-// Add https://goto.kenefeck.com as an Authorised JavaScript origin.
+// Add https://gototoastmasters.com.au as an Authorised JavaScript origin.
 const GOOGLE_CLIENT_ID = '303221448159-6i35t5bc5k5ukncm1lj36u3qb2731j2d.apps.googleusercontent.com';
 
 const SHEET_ID  = '1PSH2PuwmqhXxDKnlCw2XrV3aHjZpVgqXdYk16gveRho';
@@ -456,13 +456,24 @@ function gisLoaded() {
     client_id: GOOGLE_CLIENT_ID,
     scope: SCOPES,
     callback: async (resp) => {
+      // 'interaction_required' / 'access_denied' means no prior grant exists.
+      // Retry with explicit prompt so the user can approve the Sheets scope.
+      if (resp.error === 'interaction_required' || resp.error === 'access_denied') {
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+        return;
+      }
       if (resp.error) { showDenied(); return; }
+
       accessToken = resp.access_token;
       gapi.client.setToken({ access_token: accessToken });
       await loadAllData();
-      document.getElementById('login-view').style.display = 'none';
-      document.getElementById('app-view').style.display   = 'block';
-      showView('dashboard');
+
+      // loadAllData sets currentUser on success; stays null on error / non-committee.
+      if (currentUser) {
+        document.getElementById('login-view').style.display = 'none';
+        document.getElementById('app-view').style.display   = 'block';
+        showView('dashboard');
+      }
     },
   });
 
@@ -488,9 +499,11 @@ function maybeRender() {
 
 // Called when user clicks Google Sign In button
 function handleCredentialResponse(response) {
-  // We have an ID token — now request an access token for Sheets API
+  // ID token received — now request an OAuth access token for the Sheets API.
+  // prompt: '' (default) lets GIS show the consent screen if not yet granted.
+  // prompt: 'none' silently fails on first use and never calls the callback.
   showLoading('Signing in…');
-  tokenClient.requestAccessToken({ prompt: 'none' });
+  tokenClient.requestAccessToken({ prompt: '' });
 }
 
 function signOut() {
