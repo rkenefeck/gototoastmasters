@@ -385,6 +385,9 @@
     <a class="nav-link" onclick="showView('dietary')" id="nav-dietary">
       <span>Dietary</span>
     </a>
+    <a class="nav-link" onclick="showView('education')" id="nav-education">
+      <span>Education</span>
+    </a>
     <a class="nav-link" onclick="showView('errors')" id="nav-errors">
       <span>Errors</span>
       <span class="badge" id="badge-errors" style="display:none">0</span>
@@ -422,13 +425,14 @@ let currentUser = null;   // { email, name } parsed from the ID token
 let currentView = 'dashboard';
 
 // Cached sheet data
-let memberList    = []; // array of objects
-let memberHeaders = [];
+let memberList     = []; // array of objects
+let memberHeaders  = [];
 let onboardingList = [];
-let dietaryList   = [];
-let errorsList    = [];
-let invoicesList  = [];
-let meetingsList  = [];
+let dietaryList    = [];
+let educationList  = [];
+let errorsList     = [];
+let invoicesList   = [];
+let meetingsList   = [];
 
 // ══════════════════════════════════════════════════════════════════════════════
 // INIT
@@ -511,6 +515,7 @@ async function loadAllData() {
     const mlRaw   = d['Member List'] || [];
     const onbRaw  = d['Onboarding']  || [];
     const dietRaw = d['Dietary']     || [];
+    const eduRaw  = d['Education']   || [];
     const errRaw  = d['Errors']      || [];
     const invRaw  = d['Invoices']    || [];
     const meetRaw = d['Meetings']    || [];
@@ -519,6 +524,7 @@ async function loadAllData() {
     memberList     = rowsToObjects(mlRaw);
     onboardingList = rowsToObjects(onbRaw);
     dietaryList    = rowsToObjects(dietRaw);
+    educationList  = rowsToObjects(eduRaw);
     errorsList     = rowsToObjects(errRaw);
     invoicesList   = rowsToObjects(invRaw);
     meetingsList   = rowsToObjects(meetRaw);
@@ -555,6 +561,7 @@ function showView(view, data) {
     case 'members':     main.innerHTML = renderMembers();     break;
     case 'member-detail': main.innerHTML = renderMemberDetail(data); break;
     case 'dietary':     main.innerHTML = renderDietary();     break;
+    case 'education':   main.innerHTML = renderEducation();   break;
     case 'errors':      main.innerHTML = renderErrors();      break;
     default: main.innerHTML = '<p>View not found.</p>';
   }
@@ -899,6 +906,50 @@ function renderDietary() {
             <th>Name</th><th>Dietary</th><th>Allergies</th><th>Accessibility</th>
           </tr></thead>
           <tbody>${rows.join('') || '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:24px">No active members.</td></tr>'}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// EDUCATION VIEW
+// ══════════════════════════════════════════════════════════════════════════════
+
+function renderEducation() {
+  const active = memberList.filter(m => norm(m.status) === 'active');
+  const rows   = active.map(m => {
+    const edu = educationList.find(e =>
+      (e.member_email || '').toLowerCase() === (m.email || '').toLowerCase()
+    ) || {};
+    const name = m.invoicename || ((m.first || '') + ' ' + (m.last || '')).trim();
+    return `<tr>
+      <td>${esc(name)}</td>
+      <td>${esc(edu.edu_objectives || '—')}</td>
+      <td>${esc(edu.main_edu_path || '—')}</td>
+      <td style="text-align:center">${esc(edu.levels_to_complete || '—')}</td>
+      <td>${esc(edu.basecamp_progress || '—')}</td>
+      <td>${esc(edu.easy_speak_progress || '—')}</td>
+      <td>${esc(edu.levels_achieved || '—')}</td>
+      <td>${esc(edu.next_slot || '—')}</td>
+    </tr>`;
+  });
+
+  return `
+    <div class="card">
+      <h2>Education — Active Members (${active.length})</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>Name</th>
+            <th>Objectives</th>
+            <th>Path</th>
+            <th style="text-align:center">Levels to Go</th>
+            <th>Basecamp</th>
+            <th>Easy-Speak</th>
+            <th>Levels Achieved</th>
+            <th>Next Slot</th>
+          </tr></thead>
+          <tbody>${rows.join('') || '<tr><td colspan="8" style="color:var(--muted);text-align:center;padding:24px">No active members.</td></tr>'}</tbody>
         </table>
       </div>
     </div>`;
