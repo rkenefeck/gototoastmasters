@@ -441,6 +441,11 @@
         </select>
       </div>
 
+      <div class="field" id="dietaryDescriptionField" style="display:none">
+        <label for="dietaryDescription">Please describe your dietary requirement <span class="req">*</span></label>
+        <textarea id="dietaryDescription" name="dietaryDescription" placeholder="e.g. low FODMAP, nut-free, etc."></textarea>
+      </div>
+
       <div class="field">
         <label for="allergies">Allergies</label>
         <input type="text" id="allergies" name="allergies" placeholder="e.g. peanuts, shellfish">
@@ -540,6 +545,16 @@
     });
   });
 
+  // ── CONDITIONAL: dietaryRequirements ──────────────────────────────────
+  document.getElementById('dietaryRequirements').addEventListener('change', function () {
+    const field    = document.getElementById('dietaryDescriptionField');
+    const textarea = document.getElementById('dietaryDescription');
+    const isOther  = this.value === 'Other';
+    field.style.display   = isOther ? '' : 'none';
+    textarea.required     = isOther;
+    if (!isOther) textarea.value = '';
+  });
+
   // ── FORM SUBMIT ────────────────────────────────────────────────────────
   document.getElementById('join-form').addEventListener('submit', async e => {
     e.preventDefault();
@@ -606,6 +621,7 @@
 
       // Dietary
       dietaryRequirements: fd.get('dietaryRequirements'),
+      dietaryDescription:  fd.get('dietaryDescription') || '',
       allergies:           fd.get('allergies') || '',
       accessibilityNeeds:  fd.get('accessibilityNeeds') || '',
 
