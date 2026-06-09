@@ -347,7 +347,7 @@
 
       <div class="field">
         <label for="addressLine1">Address line 1 <span class="req">*</span></label>
-        <input type="text" id="addressLine1" name="addressLine1" autocomplete="address-line1" required placeholder="Street address">
+        <input type="text" id="addressLine1" name="addressLine1" autocomplete="address-line1" placeholder="Street address">
       </div>
 
       <div class="field">
@@ -601,19 +601,23 @@
     const input = document.getElementById('addressLine1');
     if (!input || !window.google?.maps?.places) return;
 
-    const ac = new google.maps.places.Autocomplete(input, {
-      componentRestrictions: { country: 'au' },
-      types:  ['address'],
-      fields: ['address_components'],
-    });
+    let ac = null;
 
-    // Prevent Enter key from submitting the form while the suggestion
-    // dropdown is open.
-    google.maps.event.addDomListener(input, 'keydown', e => {
-      if (e.keyCode === 13) e.preventDefault();
-    });
+    function attachAutocomplete() {
+      if (ac) return; // already attached — don't double-init
+      ac = new google.maps.places.Autocomplete(input, {
+        componentRestrictions: { country: 'au' },
+        types:  ['address'],
+        fields: ['address_components'],
+      });
 
-    ac.addListener('place_changed', () => {
+      // Prevent Enter key from submitting the form while the suggestion
+      // dropdown is open.
+      google.maps.event.addDomListener(input, 'keydown', e => {
+        if (e.keyCode === 13) e.preventDefault();
+      });
+
+      ac.addListener('place_changed', () => {
       const place = ac.getPlace();
       if (!place.address_components) return;
 
@@ -641,6 +645,18 @@
 
       // Move focus to unit field if one was found, otherwise postcode
       document.getElementById(subpremise ? 'addressLine2' : 'addressPostcode').focus();
+      });
+    } // end attachAutocomplete
+
+    // Attach Places only on first keystroke — this lets Chrome's native
+    // saved-address autofill work normally when the user clicks the field.
+    // Places activates only if the user actually starts typing.
+    input.addEventListener('keydown', function onFirstKey(e) {
+      // Ignore modifier-only keys (Tab, Shift, Ctrl, Alt, Meta)
+      if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') {
+        attachAutocomplete();
+        input.removeEventListener('keydown', onFirstKey);
+      }
     });
   }
 
