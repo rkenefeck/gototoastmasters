@@ -881,6 +881,27 @@ function renderMemberManagement(m, invoice, onboarding, isLapsed) {
       ${fieldRow('Invoice Paid Date', m.invoice_paid_date ? fmtDate(m.invoice_paid_date) : 'Not set', null)}
       ${fieldRow('TI Payment Submitted', m.ti_payment_submitted ? fmtDate(m.ti_payment_submitted) : 'Not submitted', null)}
     </div>
+    ${(() => {
+      const memberEmail = (m.email || '').toLowerCase();
+      const inv = invoicesList.slice().reverse().find(i =>
+        (i.email || '').toLowerCase() === memberEmail
+      );
+      if (!inv) return '';
+      const lines = transactionsList.filter(t => (t.email || '').toLowerCase() === memberEmail);
+      return `
+        <p style="font-size:.8rem;color:var(--muted);margin:8px 0 4px">
+          Invoice #${esc(inv.invoice_no_ || inv.invoice_number_ || '')}
+          ${inv.invoice_link ? `<a href="${esc(inv.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>` : ''}
+        </p>
+        <table class="invoice-lines">
+          <thead><tr><th>SKU</th><th style="text-align:right">Qty</th></tr></thead>
+          <tbody>
+            ${lines.length
+              ? lines.map(t => `<tr><td>${esc(t.sku || t.sku_name || '')}</td><td style="text-align:right">${esc(String(t.qty || ''))}</td></tr>`).join('')
+              : '<tr><td colspan="2" style="color:var(--muted);font-style:italic">No line items found</td></tr>'}
+          </tbody>
+        </table>`;
+    })()}
 
     <div class="action-bar" style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border)">
       ${!hasPaidDate
