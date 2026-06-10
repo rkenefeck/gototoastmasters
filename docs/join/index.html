@@ -642,15 +642,21 @@
     msgErr.classList.remove('visible');
 
     try {
-      // Apps Script Web Apps return an opaque redirect — no-cors avoids the
-      // 'cannot read response' error. The request reaches doPost regardless.
-      await fetch(WEBAPP_URL, {
-        method: 'POST',
-        mode:   'no-cors',
-        body:   JSON.stringify(payload),
+      const resp = await fetch(WEBAPP_URL, {
+        method:  'POST',
+        body:    JSON.stringify(payload),
       });
-      form.style.display = 'none';
-      msgOk.classList.add('visible');
+      let data = {};
+      try { data = await resp.json(); } catch (_) { /* non-JSON response — treat as success */ }
+      if (data.status === 'error') {
+        errTxt.textContent = (data.message || 'An error occurred.') + ' ';
+        msgErr.classList.add('visible');
+        btn.disabled    = false;
+        btn.textContent = 'Submit membership application';
+      } else {
+        form.style.display = 'none';
+        msgOk.classList.add('visible');
+      }
     } catch (err) {
       errTxt.textContent = err.message + ' ';
       msgErr.classList.add('visible');
