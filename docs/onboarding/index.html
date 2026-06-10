@@ -432,8 +432,9 @@ let onboardingList = [];
 let dietaryList    = [];
 let educationList  = [];
 let errorsList     = [];
-let invoicesList   = [];
-let meetingsList   = [];
+let invoicesList      = [];
+let transactionsList  = [];
+let meetingsList      = [];
 
 // ══════════════════════════════════════════════════════════════════════════════
 // INIT
@@ -518,17 +519,19 @@ async function loadAllData() {
     const dietRaw = d['Dietary']     || [];
     const eduRaw  = d['Education']   || [];
     const errRaw  = d['Errors']      || [];
-    const invRaw  = d['Invoices']    || [];
-    const meetRaw = d['Meetings']    || [];
+    const invRaw  = d['Invoices']      || [];
+    const txnRaw  = d['Transactions']  || [];
+    const meetRaw = d['Meetings']      || [];
 
-    memberHeaders  = mlRaw[0] || [];
-    memberList     = rowsToObjects(mlRaw);
-    onboardingList = rowsToObjects(onbRaw);
-    dietaryList    = rowsToObjects(dietRaw);
-    educationList  = rowsToObjects(eduRaw);
-    errorsList     = rowsToObjects(errRaw);
-    invoicesList   = rowsToObjects(invRaw);
-    meetingsList   = rowsToObjects(meetRaw);
+    memberHeaders    = mlRaw[0] || [];
+    memberList       = rowsToObjects(mlRaw);
+    onboardingList   = rowsToObjects(onbRaw);
+    dietaryList      = rowsToObjects(dietRaw);
+    educationList    = rowsToObjects(eduRaw);
+    errorsList       = rowsToObjects(errRaw);
+    invoicesList     = rowsToObjects(invRaw);
+    transactionsList = rowsToObjects(txnRaw);
+    meetingsList     = rowsToObjects(meetRaw);
 
     updateBadges();
   } catch (err) {
@@ -746,12 +749,20 @@ function renderMemberDetail(data) {
 function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
   const isPendingReview = invoice && norm(invoice.email_sent) === 'pending review';
 
-  const skuLines = invoice
-    ? (invoicesList.filter(i =>
-        (i.email || '').toLowerCase() === (m.email || '').toLowerCase() &&
-        ['pending', 'pending review'].includes(norm(i.email_sent || ''))
-      ).slice(-1)[0] ? [] : [])
-    : [];
+  // Line items from Transactions tab, matched by email
+  const memberEmail = (m.email || '').toLowerCase();
+  const skuLines = transactionsList.filter(t =>
+    (t.email || '').toLowerCase() === memberEmail
+  );
+
+  // Format join date as "Month Year" e.g. "June 2026"
+  const joinMonthDisplay = m.join_date
+    ? (() => {
+        const d = new Date(m.join_date);
+        return isNaN(d.getTime()) ? m.join_date
+          : d.toLocaleDateString('en-AU', { month: 'long', year: 'numeric', timeZone: 'Australia/Melbourne' });
+      })()
+    : '—';
 
   return `
     <div class="section-title">Applicant Details</div>
@@ -768,7 +779,7 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
       ${fieldRow('TM ID',       m.ti_number || '—', m.ti_number)}
       ${fieldRow('TM History',  m.membership_category || '—', null)}
       ${fieldRow('Attended as guest', m.attended_as_guest || '—', null)}
-      ${fieldRow('Join month',  m.join_date || '—', null)}
+      ${fieldRow('Join month',  joinMonthDisplay, null)}
       ${fieldRow('Period',      m.period || '—', null)}
       ${fieldRow('Referral',    m.referral_source || '—', null)}
       ${fieldRow('Referred by', m.referred_by || '—', null)}
@@ -781,7 +792,20 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
       <a href="https://www.toastmasters.org/member-admin/find-a-member" target="_blank" rel="noopener">Search Club Central →</a>
     </div>` : ''}
     ${invoice
-      ? `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">Invoice #${esc(invoice.invoice_no_ || invoice.invoice_number_ || invoice._invoice_number || '')} generated. Current line items:</p>`
+      ? `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">
+           Invoice #${esc(invoice.invoice_no_ || invoice.invoice_number_ || invoice._invoice_number || '')} generated.
+           ${invoice.invoice_link
+             ? `<a href="${esc(invoice.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>`
+             : ''}
+         </p>
+         <table class="invoice-lines">
+           <thead><tr><th>SKU</th><th style="text-align:right">Qty</th></tr></thead>
+           <tbody>
+             ${skuLines.length
+               ? skuLines.map(t => `<tr><td>${esc(t.sku || t.sku_name || '')}</td><td style="text-align:right">${esc(String(t.qty || ''))}</td></tr>`).join('')
+               : '<tr><td colspan="2" style="color:var(--muted);font-style:italic">No line items found</td></tr>'}
+           </tbody>
+         </table>`
       : `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">No invoice generated yet.</p>`}
 
     <div id="invoice-editor">
