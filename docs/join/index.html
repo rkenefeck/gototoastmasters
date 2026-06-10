@@ -641,18 +641,33 @@
     msgOk.classList.remove('visible');
     msgErr.classList.remove('visible');
 
+    const controller = new AbortController();
+    const timeoutId  = setTimeout(() => controller.abort(), 30000); // 30 s
+
     try {
-      // Apps Script Web Apps return an opaque redirect — no-cors avoids the
-      // 'cannot read response' error. The request reaches doPost regardless.
-      await fetch(WEBAPP_URL, {
-        method: 'POST',
-        mode:   'no-cors',
-        body:   JSON.stringify(payload),
+      const resp = await fetch(WEBAPP_URL, {
+        method:  'POST',
+        body:    JSON.stringify(payload),
+        signal:  controller.signal,
       });
-      form.style.display = 'none';
-      msgOk.classList.add('visible');
+      clearTimeout(timeoutId);
+      let data = {};
+      try { data = await resp.json(); } catch (_) { /* non-JSON response — treat as success */ }
+      if (data.status === 'error') {
+        errTxt.textContent = (data.message || 'An error occurred.') + ' ';
+        msgErr.classList.add('visible');
+        btn.disabled    = false;
+        btn.textContent = 'Submit membership application';
+      } else {
+        form.style.display = 'none';
+        msgOk.classList.add('visible');
+      }
     } catch (err) {
-      errTxt.textContent = err.message + ' ';
+      clearTimeout(timeoutId);
+      const msg = err.name === 'AbortError'
+        ? 'The request timed out after 30 seconds.'
+        : err.message;
+      errTxt.textContent = msg + ' ';
       msgErr.classList.add('visible');
       btn.disabled    = false;
       btn.textContent = 'Submit membership application';
