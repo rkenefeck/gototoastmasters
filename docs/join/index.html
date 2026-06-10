@@ -508,7 +508,6 @@
 <script>
   // ── CONFIG ─────────────────────────────────────────────────────────────
   const WEBAPP_URL   = 'https://script.google.com/macros/s/AKfycbwJDm5DcJ3Emm5Q1Gf5mKEzLwZBHcXEetxb1XEGc1Z1q-8hJOdC9mox2LeIG07lP1AnxQ/exec';
-  const MAPS_API_KEY = 'AIzaSyCAdLRQ-BSBlZFFas_kMCbqYTXh1irMTMc'; // Google Maps Platform → Maps JavaScript API + Places API
 
   // ── POPULATE JOIN MONTH SELECT ─────────────────────────────────────────
   (function populateJoinMonths() {
@@ -674,82 +673,41 @@
     }
   });
 
-  // ── PLACES AUTOCOMPLETE ────────────────────────────────────────────────
-  // Fills structured address fields when the user selects a suggestion.
-  // Degrades gracefully — form works normally if the API key is not configured.
-  function initPlacesAutocomplete() {
-    const input = document.getElementById('addressLine1');
-    if (!input || !window.google?.maps?.places) return;
+  // ── ADDRESS NORMALISATION ──────────────────────────────────────────────
+  // On blur: title-case street address lines and city; uppercase state and country.
+  // Postcode: strip non-digits and warn if not 4 digits.
 
-    let ac = null;
-
-    function attachAutocomplete() {
-      if (ac) return; // already attached — don't double-init
-      ac = new google.maps.places.Autocomplete(input, {
-        componentRestrictions: { country: 'au' },
-        types:  ['address'],
-        fields: ['address_components'],
-      });
-
-      // Prevent Enter key from submitting the form while the suggestion
-      // dropdown is open.
-      google.maps.event.addDomListener(input, 'keydown', e => {
-        if (e.keyCode === 13) e.preventDefault();
-      });
-
-      ac.addListener('place_changed', () => {
-      const place = ac.getPlace();
-      if (!place.address_components) return;
-
-      const get = (type, useLong = true) => {
-        const c = place.address_components.find(c => c.types.includes(type));
-        return c ? (useLong ? c.long_name : c.short_name) : '';
-      };
-
-      const streetNum  = get('street_number');
-      const route      = get('route');
-      const subpremise = get('subpremise');         // unit / level
-      const locality   = get('locality')
-                      || get('sublocality_level_1')
-                      || get('colloquial_area');
-      const state      = get('administrative_area_level_1', false); // VIC, NSW…
-      const postcode   = get('postal_code');
-      const country    = get('country');             // Australia
-
-      document.getElementById('addressLine1').value   = [streetNum, route].filter(Boolean).join(' ');
-      document.getElementById('addressLine2').value   = subpremise || '';
-      document.getElementById('addressCity').value    = locality;
-      document.getElementById('addressState').value   = state;
-      document.getElementById('addressCountry').value = country || 'Australia';
-      document.getElementById('addressPostcode').value = postcode;
-
-      // Move focus to unit field if one was found, otherwise postcode
-      document.getElementById(subpremise ? 'addressLine2' : 'addressPostcode').focus();
-      });
-    } // end attachAutocomplete
-
-    // Attach Places only on first keystroke — this lets Chrome's native
-    // saved-address autofill work normally when the user clicks the field.
-    // Places activates only if the user actually starts typing.
-    input.addEventListener('keydown', function onFirstKey(e) {
-      // Ignore modifier-only keys (Tab, Shift, Ctrl, Alt, Meta)
-      if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') {
-        attachAutocomplete();
-        input.removeEventListener('keydown', onFirstKey);
-      }
-    });
+  /** Title-case: capitalise first letter of each word, lowercase the rest. */
+  function toTitleCase(s) {
+    return s.trim().replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
   }
 
-  // Load Maps JS API only when key is configured — form works without it
-  (function loadMapsApi() {
-    if (!MAPS_API_KEY || MAPS_API_KEY.startsWith('PASTE_')) return;
-    const s   = document.createElement('script');
-    s.src     = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&libraries=places&callback=initPlacesAutocomplete`;
-    s.async   = true;
-    s.defer   = true;
-    s.onerror = () => console.warn('Google Maps failed to load — address autocomplete unavailable.');
-    document.head.appendChild(s);
-  })();
+  ['addressLine1', 'addressLine2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('blur', () => { if (el.value.trim()) el.value = toTitleCase(el.value); });
+  });
+
+  document.getElementById('addressCity')?.addEventListener('blur', function() {
+    if (this.value.trim()) this.value = toTitleCase(this.value);
+  });
+
+  document.getElementById('addressState')?.addEventListener('blur', function() {
+    if (this.value.trim()) this.value = this.value.trim().toUpperCase();
+  });
+
+  document.getElementById('addressCountry')?.addEventListener('blur', function() {
+    if (this.value.trim()) this.value = toTitleCase(this.value);
+  });
+
+  document.getElementById('addressPostcode')?.addEventListener('blur', function() {
+    const v = this.value.replace(/\D/g, '');
+    this.value = v;
+    this.setCustomValidity(v.length === 4 ? '' : 'Please enter a valid 4-digit Australian postcode.');
+  });
+  document.getElementById('addressPostcode')?.addEventListener('input', function() {
+    this.setCustomValidity(''); // clear on edit so re-validation triggers on next blur
+  });
 </script>
 
 </body>
