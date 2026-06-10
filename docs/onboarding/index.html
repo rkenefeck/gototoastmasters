@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GOTO Toastmasters — Committee Hub</title>
+  <link rel="icon" href="https://ccdn.toastmasters.org/medias/files/brand-materials/loyal-blue-masthead-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -780,7 +781,7 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
       <a href="https://www.toastmasters.org/member-admin/find-a-member" target="_blank" rel="noopener">Search Club Central →</a>
     </div>` : ''}
     ${invoice
-      ? `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">Invoice #${esc(invoice.invoice_number_ || invoice._invoice_number || '')} generated. Current line items:</p>`
+      ? `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">Invoice #${esc(invoice.invoice_no_ || invoice.invoice_number_ || invoice._invoice_number || '')} generated. Current line items:</p>`
       : `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">No invoice generated yet.</p>`}
 
     <div id="invoice-editor">
