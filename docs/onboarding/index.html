@@ -434,6 +434,7 @@ let educationList  = [];
 let errorsList     = [];
 let invoicesList      = [];
 let transactionsList  = [];
+let productsList      = [];
 let meetingsList      = [];
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -521,6 +522,7 @@ async function loadAllData() {
     const errRaw  = d['Errors']      || [];
     const invRaw  = d['Invoices']      || [];
     const txnRaw  = d['Transactions']  || [];
+    const prodRaw = d['Products']      || [];
     const meetRaw = d['Meetings']      || [];
 
     memberHeaders    = mlRaw[0] || [];
@@ -531,6 +533,7 @@ async function loadAllData() {
     errorsList       = rowsToObjects(errRaw);
     invoicesList     = rowsToObjects(invRaw);
     transactionsList = rowsToObjects(txnRaw);
+    productsList     = rowsToObjects(prodRaw);
     meetingsList     = rowsToObjects(meetRaw);
 
     updateBadges();
@@ -815,6 +818,7 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
     <div class="action-bar">
       <button class="btn btn-danger btn-sm" onclick="rejectMember('${esc(m.email)}')">Reject</button>
       <div class="spacer"></div>
+      <button class="btn btn-ghost btn-sm" onclick="generateInvoiceFlow('${esc(m.email)}')">Amend Invoice</button>
       <button class="btn btn-success"
         onclick="approveAndSend('${esc(m.email)}')"
         ${isPendingReview ? 'disabled title="Resolve membership category first"' : ''}>
@@ -881,6 +885,27 @@ function renderMemberManagement(m, invoice, onboarding, isLapsed) {
       ${fieldRow('Invoice Paid Date', m.invoice_paid_date ? fmtDate(m.invoice_paid_date) : 'Not set', null)}
       ${fieldRow('TI Payment Submitted', m.ti_payment_submitted ? fmtDate(m.ti_payment_submitted) : 'Not submitted', null)}
     </div>
+    ${(() => {
+      const memberEmail = (m.email || '').toLowerCase();
+      const inv = invoicesList.slice().reverse().find(i =>
+        (i.email || '').toLowerCase() === memberEmail
+      );
+      if (!inv) return '';
+      const lines = transactionsList.filter(t => (t.email || '').toLowerCase() === memberEmail);
+      return `
+        <p style="font-size:.8rem;color:var(--muted);margin:8px 0 4px">
+          Invoice #${esc(inv.invoice_no_ || inv.invoice_number_ || '')}
+          ${inv.invoice_link ? `<a href="${esc(inv.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>` : ''}
+        </p>
+        <table class="invoice-lines">
+          <thead><tr><th>SKU</th><th style="text-align:right">Qty</th></tr></thead>
+          <tbody>
+            ${lines.length
+              ? lines.map(t => `<tr><td>${esc(t.sku || t.sku_name || '')}</td><td style="text-align:right">${esc(String(t.qty || ''))}</td></tr>`).join('')
+              : '<tr><td colspan="2" style="color:var(--muted);font-style:italic">No line items found</td></tr>'}
+          </tbody>
+        </table>`;
+    })()}
 
     <div class="action-bar" style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border)">
       ${!hasPaidDate
@@ -1022,7 +1047,16 @@ async function approveAndSend(email) {
   if (!confirm(`Approve this application and send invoice to ${email}?`)) return;
   showLoading('Sending invoice…');
   try {
-    const result = await hubPost({ action: 'approveAndSendInvoice', memberEmail: email });
+    // If the invoice editor is open and populated, pass its lines to regenerate before sending
+    const editorLines = (() => {
+      const el = document.getElementById('invoice-editor');
+      if (!el || el.dataset.email !== email) return null;
+      const lines = readEditorLines();
+      return lines.length ? lines : null;
+    })();
+    const payload = { action: 'approveAndSendInvoice', memberEmail: email };
+    if (editorLines) payload.lineItems = editorLines;
+    const result = await hubPost(payload);
     if (result.error) throw new Error(result.error);
     await refreshData();
     showView('members');
@@ -1127,8 +1161,105 @@ async function sendRenewalInvoice(email) {
   }
 }
 
-async function generateInvoiceFlow(email) {
-  showToast('Use the Approve & Send Invoice flow or contact the committee list.', 'info');
+// ─── INVOICE EDITOR ──────────────────────────────────────────────────────────
+
+/**
+ * Opens the inline invoice line-item editor for a member.
+ * Pre-populates with their existing pending transaction lines.
+ * Used for both "Amend Invoice" (prospect view) and "Generate Invoice" (member mgmt).
+ */
+function generateInvoiceFlow(email) {
+  const memberEmail = email.toLowerCase();
+  // Pre-populate with existing transaction lines for this member
+  const existingLines = transactionsList.filter(t =>
+    (t.email || '').toLowerCase() === memberEmail
+  ).map(t => ({ sku: t.sku || t.sku_name || '', qty: t.qty || '1' }));
+
+  renderInvoiceEditor(email, existingLines.length ? existingLines : [{ sku: '', qty: '1' }]);
+}
+
+/**
+ * Renders the line-item editor into #invoice-editor.
+ * lines: [{sku, qty}]
+ */
+function renderInvoiceEditor(email, lines) {
+  const skuOptions = productsList
+    .map(p => p.sku_name || p.sku || '')
+    .filter(Boolean)
+    .sort();
+
+  const rowsHtml = lines.map((l, i) => `
+    <tr id="inv-row-${i}">
+      <td>
+        <select class="inv-sku" data-row="${i}" style="width:100%;padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:.8rem;font-family:inherit">
+          <option value="">— select SKU —</option>
+          ${skuOptions.map(s => `<option value="${esc(s)}" ${s === l.sku ? 'selected' : ''}>${esc(s)}</option>`).join('')}
+        </select>
+      </td>
+      <td style="width:60px">
+        <input type="number" class="inv-qty" data-row="${i}" min="1" value="${esc(String(l.qty || 1))}"
+          style="width:100%;padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:.8rem;font-family:inherit">
+      </td>
+      <td style="width:36px;text-align:center">
+        <button class="btn btn-ghost btn-sm" onclick="removeInvoiceLine(${i})" title="Remove">✕</button>
+      </td>
+    </tr>`).join('');
+
+  const editorEl = document.getElementById('invoice-editor');
+  if (!editorEl) return;
+
+  editorEl.innerHTML = `
+    <table class="invoice-lines" id="inv-editor-table">
+      <thead><tr><th>SKU</th><th style="text-align:right">Qty</th><th></th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+    <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+      <button class="btn btn-ghost btn-sm" onclick="addInvoiceLine('${esc(email)}')">+ Add line</button>
+      <div class="spacer"></div>
+      <button class="btn btn-primary btn-sm" onclick="saveAmendedInvoice('${esc(email)}')">Generate amended invoice</button>
+    </div>`;
+
+  // Store email on the element for saveAmendedInvoice to read
+  editorEl.dataset.email = email;
+}
+
+function addInvoiceLine(email) {
+  const existing = readEditorLines();
+  existing.push({ sku: '', qty: '1' });
+  renderInvoiceEditor(email, existing);
+}
+
+function removeInvoiceLine(rowIdx) {
+  const email   = document.getElementById('invoice-editor').dataset.email;
+  const lines   = readEditorLines().filter((_, i) => i !== rowIdx);
+  renderInvoiceEditor(email, lines.length ? lines : [{ sku: '', qty: '1' }]);
+}
+
+function readEditorLines() {
+  const skuEls = document.querySelectorAll('.inv-sku');
+  const qtyEls = document.querySelectorAll('.inv-qty');
+  const lines  = [];
+  skuEls.forEach((el, i) => {
+    if (el.value) lines.push({ sku: el.value, qty: qtyEls[i] ? qtyEls[i].value || '1' : '1' });
+  });
+  return lines;
+}
+
+async function saveAmendedInvoice(email) {
+  const lines = readEditorLines();
+  if (!lines.length) { showToast('Add at least one SKU line.'); return; }
+  if (!confirm(`Regenerate invoice for ${email} with ${lines.length} line item(s)?`)) return;
+  showLoading('Generating invoice…');
+  try {
+    const result = await hubPost({ action: 'generateInvoice', memberEmail: email, lineItems: lines });
+    if (result.error) throw new Error(result.error);
+    await refreshData();
+    openMember(email);
+    showToast('Invoice regenerated. Use Approve & Send Invoice when ready.');
+  } catch (err) {
+    hideLoading();
+    showError('Failed to generate invoice: ' + err.message);
+  }
 }
 
 async function dismissError(rowNumber) {
