@@ -266,6 +266,11 @@ function docToMarkdown_(doc) {
       }
 
       if (hashes) {
+        // Blank styled paragraph (e.g. empty H2 used as spacer) → blank line only
+        if (!inlineText.trim()) {
+          if (!prevBlank) { lines.push(''); prevBlank = true; }
+          continue;
+        }
         // Before the first H1, inject the auto-generated TOC
         if (hashes === '# ' && tocEntries.length > 0) {
           // Check we haven't already emitted the TOC
@@ -341,6 +346,8 @@ function docToMarkdown_(doc) {
  */
 function headingPrefix_(heading) {
   var H = DocumentApp.ParagraphHeading;
+  if (heading === H.TITLE)    return '# ';   // Google Docs "Title" style → H1
+  if (heading === H.SUBTITLE) return '## ';  // Google Docs "Subtitle" style → H2
   if (heading === H.HEADING1) return '# ';
   if (heading === H.HEADING2) return '## ';
   if (heading === H.HEADING3) return '### ';
