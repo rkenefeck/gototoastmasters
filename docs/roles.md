@@ -1,8 +1,28 @@
 Much of this guide is plagiarised from easy-speak.org and reinterpreted with a GOTO Slant. Please note that easy-speak owns the copyright to these words.
 
+<!-- toc -->
+- [Ah-Counter](#ah-counter)
+- [Evaluator](#evaluator)
+- [Evaluation Coordinator](#evaluation-coordinator)
+- [General Evaluator](#general-evaluator)
+- [Grammarian](#grammarian)
+- [TABLE TOPICS™ Speaker](#table-topics-speaker)
+- [Meeting Speaker](#meeting-speaker)
+- [Timer](#timer)
+- [Toastmaster](#toastmaster)
+- [Table Topicsmaster](#table-topicsmaster)
+- [Table Topics Evaluator](#table-topics-evaluator)
+- [Reserve Speaker](#reserve-speaker)
+- [Sergeant at Arms (S@A) /Force Warden](#sergeant-at-arms-sa-force-warden)
+- [Vote Counter](#vote-counter)
+- [Harkmaster](#harkmaster)
+- [Warden of Interstellar Welcomes (Guest Liaison)](#warden-of-interstellar-welcomes-guest-liaison)
+- [Print Master](#print-master)
+<!-- /toc -->
+
 # **Ah-Counter**
 
-**Helping members off their crutches**  The purpose of the Ah-Counter is to note any word or sound used as a crutch by anyone who speaks during the meeting. Words may be inappropriate interjections, such as *and, well, but, so* and *you know*. Sounds may be *ah, um* or *er*. You should also note when a speaker repeats a word or phrase such as “I, I” or “This means, this means.” These words and sounds can be annoying to listeners. The Ah-Counter role is an excellent opportunity to practise your listening skills.
+**Helping members off their crutches**  The purpose of the Ah-Counter is to note any word or sound used as a crutch by anyone who speaks during the meeting. Words may be inappropriate interjections, such as *and, well, but, so* and *you know*. Sounds may be *ah, um* or *er*. You should also note when a speaker repeats a word or phrase such as “I, I” or “This means, this means.” These words and sounds can be annoying to listeners. The Ah-Counter role is an excellent opportunity to practise your listening skills.
 
 We have an [Ah Counter Template](https://docs.google.com/spreadsheets/d/1_QAhpysTXPS1eakPS3RfzaVG1E4rqbU-yLZgf75fu9M/edit?usp=sharing) to help track fillers.  It’s a good idea to look at the agenda before the meeting and fill in each person’s name. This sheet prints beautifully in A4 landscape if you would like to mark it by hand instead.
 Throughout the meeting, listen to everyone for sounds and long pauses used as fillers and not as a necessary part of sentence structure. Write down how many filler sounds or words each person used during all portions of the meeting.
@@ -16,7 +36,7 @@ The main Ah counter presents the oral report the assistant ah counter assists in
 # **Evaluator**
 
 If you have not done the basecamp (on toastmasters.org) evaluation eLearning. It is advised that you complete this training before you do an evaluation. It explains how to fill in the evaluation form and structure and you 2-3 min oral evaluation. It takes 15-30 mins to complete.
-Login to toastmasters.org and select Pathways>got to basecamp. Launch Basecamp. Once in base camp search for “How to Evaluate” you should find the tutorial there.  People join Toastmasters to improve their **speaking and leadership skills**, and these skills are improved with the help of evaluations. Members complete projects in the ***Competent Communication***** and *****Competent Leadership***** manuals** and you may be asked to evaluate their work. At some point, everyone is asked to participate by providing an evaluation. You will provide both **verbal and written evaluations for speakers **using the guide in the manual. You’ll always give a **written evaluation for leadership roles**, though verbal evaluations for leaders are handled differently from club to club. Sometimes verbal evaluations are given during the meeting and sometimes they are given privately, after the meeting. **Check with your vice president education (VPE)** or the Toastmaster if you’re not sure of your club’s method.
+Login to toastmasters.org and select Pathways>got to basecamp. Launch Basecamp. Once in base camp search for “How to Evaluate” you should find the tutorial there.  People join Toastmasters to improve their **speaking and leadership skills**, and these skills are improved with the help of evaluations. Members complete projects in the ***Competent Communication***** and *****Competent Leadership***** manuals** and you may be asked to evaluate their work. At some point, everyone is asked to participate by providing an evaluation. You will provide both **verbal and written evaluations for speakers **using the guide in the manual. You’ll always give a **written evaluation for leadership roles**, though verbal evaluations for leaders are handled differently from club to club. Sometimes verbal evaluations are given during the meeting and sometimes they are given privately, after the meeting. **Check with your vice president education (VPE)** or the Toastmaster if you’re not sure of your club’s method.
 Several days before the meeting talk with the speaker or leader you’ve been assigned to evaluate and find out which manual project they will present. Review the project goals and what the speaker or leader hopes to achieve.
 **Evaluation requires careful preparation** if the speaker or leader is to benefit. Study the project objectives as well as the evaluation guide in the manual. Remember, the purpose of evaluation is to **help people develop their speaking or leadership skills in various situations**. By actively listening, providing reinforcement for their strengths and gently offering useful advice, you motivate members to work hard and improve. When you show the way to improvement, you’ve opened the door to strengthening their ability.
 When you arrive at the meeting, speak briefly with the general evaluator to confirm the evaluation session format. Then retrieve the manual from the speaker or leader and ask one last time if he or she has any specific goals in mind.
@@ -35,7 +55,7 @@ The point of this role is to run the entire evaluation part of the meeting and C
 
 # **General Evaluator**
 
-**Improving the process ** **while overseeing the execution. **
+**Improving the process ** **while overseeing the execution. **
 AS the GOTO Toastmaster sessions are longer than many clubs, the responsibilities for General Evaluator have been separated down between Evaluation Coordinator and General Evaluator.
 This includes evaluating everything from the preparations for the meeting to what occurred on that day, upto and including the Evaluation Coordinator.
 Your final task *before* the meeting is to prepare a brief verbal explanation detailing:
@@ -47,14 +67,12 @@ f you want to go above and beyond.
 Logon to toastmasters.org and open basecamp
 Find the specific evaluation form for each of the speakers and look at them. (share them with the evaluators if you get a chance). Read through the evaluation criteria as this will help you evaluate the evaluators.
 
-** **
-
 # Grammarian
 
-**The syntax sentinel**  **Before the Meeting** One benefit of Toastmasters is that it helps people improve their grammar and word use. Being a grammarian also provides an exercise in expanding listening skills. You have several responsibilities: to introduce new words to members, to comment on language usage during the course of the meeting, and to provide examples of eloquence.
+**The syntax sentinel**  **Before the Meeting** One benefit of Toastmasters is that it helps people improve their grammar and word use. Being a grammarian also provides an exercise in expanding listening skills. You have several responsibilities: to introduce new words to members, to comment on language usage during the course of the meeting, and to provide examples of eloquence.
 Several days before the meeting, **select a "word of the day"** and update EasySpeak with that word:
 
-**At the Meeting** Ideally, **write your word on the board** when you get up to do your introduction. Also, get a blank piece of paper and pen ready to make notes. (at our venue not usually somewhere to write it but printed on a few pieces of paper around the room usually does the job - worst case it is on the agenda)
+**At the Meeting** Ideally, **write your word on the board** when you get up to do your introduction. Also, get a blank piece of paper and pen ready to make notes. (at our venue not usually somewhere to write it but printed on a few pieces of paper around the room usually does the job - worst case it is on the agenda)
 When introduced:
 Throughout the meeting, listen to everyone’s word usage. Write down any awkward use or misuse of the language (incomplete sentences, sentences that change direction in midstream, incorrect grammar or malapropisms) with a note of who erred. For example, point out if someone used a singular verb with a plural subject. “One in five children wear glasses” should be “one in five children wears glasses.” Note when a pronoun is misused. “No one in the choir sings better than her” should be “No one in the choir sings better than she.”
 Look for missed opportunities - if someone could have used a perfect word in a situation, but didn’t, you should include this to let them know for next time.
@@ -79,11 +97,9 @@ The CC manual speeches usually last 5-7 minutes. ACS manual project speeches are
 Every speaker is a role model and club members learn from one another’s speeches. Prepare and rehearse to ensure you present the best speech possible. Don’t insult your fellow club members by delivering a poorly prepared speech. However, it’s also true that no speech is perfect. So, get out there and try! Here’s what to do:
 You’ll enjoy a growing sense of confidence as you repeat these steps with new speech projects. Don’t be afraid to do the work, enjoy the applause and reap the educational benefits. Your courage will be rewarded!
 
-** **
-
 # Timer
 
- A timer’s job is to keep the meeting running on time and making sure people complete their speeches in the allotted time.
+ A timer’s job is to keep the meeting running on time and making sure people complete their speeches in the allotted time.
 Here’s how to succeed as timer:
 
 How to time table topics:
@@ -99,7 +115,6 @@ OG Lightsabers
 Usbc Lightsavers
 
 Please test lights before the meeting, they should have been charged in advance.
-** **
 
 # Toastmaster
 
@@ -113,7 +128,7 @@ Introductions are brief and carefully planned and done by the evaluators. Contac
 You need all of these elements to create your introductions. Remember to keep the introductions between 30-60 seconds in length.
 For more information about introductions see [*When You’re the Introducer*](http://www.toastmasters.org/1167e)[ ](http://www.toastmasters.org/1167e)(Item 1167E) and *The Better Speaker Series* module [*Creating an Introduction*](http://www.toastmasters.org/277)[ ](http://www.toastmasters.org/277)(Item 277).
 Of course, you want to avoid awkward interruptions or gaps in meeting flow so your last preparation step before the meeting is to plan remarks you can use to make smooth transitions from one portion of the program to another. You may not need them, but you should be prepared for the possibility of awkward periods of silence.
-**The Big Show** On meeting day, show up early. You’ll need time to make sure the stage is set for a successful meeting. To start, check with each speaker as they arrive to see if they have made any last-minute changes to their speeches – such as changing the title.
+**The Big Show** On meeting day, show up early. You’ll need time to make sure the stage is set for a successful meeting. To start, check with each speaker as they arrive to see if they have made any last-minute changes to their speeches – such as changing the title.
 You and the speakers will need quick and easy access to the lectern. Direct the speakers to sit near the front of the room and make sure they leave a seat open for you near the front.
 When it’s time to start the program, the club president calls the meeting to order. Sometimes he or she will make announcements, introduce guests or conduct other club business before introducing you.
 When you’re introduced, the president will wait until you arrive at the lectern before being seated. (This is why you should sit at the front of the room.)
@@ -123,7 +138,7 @@ After the Table Topics session has concluded, most clubs begin the speaking prog
 You will lead the applause before and after the Table Topics session, each speaker and the general evaluator. When each presenter has finished, you return to the lectern so the speaker can be seated and you can begin your next introduction.
 At the conclusion of the speaking program, request the timer’s report and vote for the best speaker, if your club offers this award.
 Briefly reintroduce the general evaluator. While votes are being tallied, invite comments from guests and announcements (such as verification of next week’s program).
-Present trophies or ribbons as practiced by your club. Yep - Adjourn the meeting, or if appropriate, return control to the club president.   Serving as Toastmaster is an excellent way to practice many valuable skills as you strive to make the meeting one of the club’s best. Preparation is key to your success.
+Present trophies or ribbons as practiced by your club. Yep - Adjourn the meeting, or if appropriate, return control to the club president.   Serving as Toastmaster is an excellent way to practice many valuable skills as you strive to make the meeting one of the club’s best. Preparation is key to your success.
 
 # Table Topicsmaster
 
@@ -139,7 +154,6 @@ Watch your total time. You may need to adjust the number of questions so your se
 If your club presents a best Table Topics speaker award:
 
 We have 2 table topic masters per standard meeting one during entree the other during mains. The end time for all the table topics is set so adjust the number of questions to ensure we finish on time.
-** **
 
 # Table Topics Evaluator
 
@@ -177,8 +191,6 @@ Before the meeting:
 Password can be shared by president or previous vote counter at the time of need.
 During the meeting:
 
-** **
-
 # Harkmaster
 
 The main purpose of the Harkmaster role is to encourage effective listening during the meeting by compiling questions and running a quiz session towards the end.
@@ -210,7 +222,6 @@ Keep an eye on the Timekeeper to ensure that you don’t go over time.
 # Warden of Interstellar Welcomes (Guest Liaison)
 
 The purpose of this role is to welcome guest and ensure they know what to expect during the meeting
-** **
 
 # Print Master
 
