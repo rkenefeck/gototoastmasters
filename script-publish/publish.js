@@ -109,6 +109,33 @@ function publishNow(docId) {
   Logger.log('Commit: ' + (url || 'OK'));
 }
 
+// ── Test helpers — push specific Docs to the test branch ─────────────────────
+
+/**
+ * Publish the Role Guide to the test branch for diff review.
+ * Set GITHUB_BRANCH = 'test/publish-pipeline' in Script Properties first.
+ */
+function testPublishRoleGuide() {
+  publishNow('1c-_XD32gXbSiElJUc99GAyZUq_Ywq02uBAjTXTTW3e0');
+}
+
+/** Publish the Club Offering (Pitch) to the test branch. */
+function testPublishPitch() {
+  publishNow('11odd_FP2wLXZOGLoNw1y8upnEfUBXVrq3JNnOenZSJ4');
+}
+
+/** Publish the Toastmaster Checklist to the test branch. */
+function testPublishChecklist() {
+  publishNow('1X7Z86L2b7jwmTZ2YC59FZY6sGESKVyZIoobmAFj_ceI');
+}
+
+/** Publish all three Docs to the test branch in one go. */
+function testPublishAll() {
+  testPublishRoleGuide();
+  testPublishPitch();
+  testPublishChecklist();
+}
+
 // ── PROTOTYPE — run this first to validate the converter ─────────────────────
 /**
  * Convert the Role Guide Doc and log the Markdown output.
