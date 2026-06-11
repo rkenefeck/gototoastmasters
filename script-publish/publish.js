@@ -364,7 +364,12 @@ function paraInlineToMd_(para) {
     }
     // InlineImage, Equation, etc. — skipped
   }
-  return result;
+
+  // Convert soft line breaks (Shift+Enter in Google Docs = \n inside a single
+  // paragraph element) to Markdown hard line breaks (two trailing spaces + \n).
+  // Without this, consecutive lines like a committee list collapse into one line
+  // because Markdown ignores single newlines.
+  return result.replace(/\n/g, '  \n');
 }
 
 /**
