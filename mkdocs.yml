@@ -16,7 +16,7 @@ nav:
 theme:
   name: 'material'
   palette:
-    scheme: 'slate'
+    scheme: 'default'
     primary: 'custom'
     accent: 'custom'
   features:
@@ -26,10 +26,17 @@ theme:
   - navigation.tracking    # Updates the url with highlighted section anchor.
   - toc.integrate          # Include the TOC sections in the left navugation.
   logo: "https://ccdn.toastmasters.org/medias/files/brand-materials/loyal-blue-masthead-logo.png"
+  favicon: "https://ccdn.toastmasters.org/medias/files/brand-materials/loyal-blue-masthead-logo.png"
   icon:
     logo: 'material/library'
     repo: 'material/library'
-  font: Montserrat
+  font:
+    text: 'Montserrat'
+    code: 'Roboto Mono'
+
+extra_css:
+  - assets/css/extra.css
+
 extra:
   social:
     - icon: 'fontawesome/brands/linkedin'
