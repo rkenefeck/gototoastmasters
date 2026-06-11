@@ -34,19 +34,18 @@ Scope: Only the `gototoastmasters` repo.
 
 ---
 
-## 3. Add Doc IDs to the allowlist
+## 3. Allowlist is already configured
 
-Open `publish.js` and add entries to `PUBLISH_ALLOWLIST`:
+`PUBLISH_ALLOWLIST` in `publish.js` already contains:
 
-```js
-var PUBLISH_ALLOWLIST = {
-  'ROLE_GUIDE_DOC_ID':   'docs/roles.md',
-  'PITCH_DOC_ID':        'docs/pitch.md',
-};
-```
+| Doc                    | Repo path            |
+|------------------------|----------------------|
+| Role Guide             | `docs/roles.md`      |
+| Club Offering          | `docs/pitch.md`      |
+| Toastmaster Checklist  | `docs/checklist.md`  |
 
-To find a Doc ID: open the Doc → the URL is
-`https://docs.google.com/document/d/<THIS IS THE ID>/edit`
+To add the Committee Roles doc when it's authored: uncomment its line in
+`PUBLISH_ALLOWLIST` and add the Doc ID.
 
 ---
 
@@ -54,8 +53,8 @@ To find a Doc ID: open the Doc → the URL is
 
 Before wiring up live publishing, test the converter output:
 
-1. Add the Role Guide Doc ID to `protoConvertRoleGuide()` in `publish.js`
-2. In the Apps Script editor, run `protoConvertRoleGuide()`
+1. In the Apps Script editor, run `protoConvertRoleGuide()`
+   (the Role Guide Doc ID is already set)
 3. Check the execution log — compare the Markdown output against
    the live `docs/roles.md` in the repo
 4. Key things to verify:

@@ -21,12 +21,13 @@
 // Adding a Doc here is a deliberate, code-reviewed act.
 
 var PUBLISH_ALLOWLIST = {
-  // Paste each Doc ID from the Doc's URL (the long ID between /d/ and /edit).
-  // Example URL: https://docs.google.com/document/d/XXXXXXXXXX/edit
-  //
-  // 'PASTE_ROLE_GUIDE_DOC_ID':           'docs/roles.md',
-  // 'PASTE_PITCH_DOC_ID':                'docs/pitch.md',
-  // 'PASTE_TOASTMASTER_CHECKLIST_DOC_ID':'docs/checklist.md',
+  // Role Guide → Meeting Roles page
+  '1c-_XD32gXbSiElJUc99GAyZUq_Ywq02uBAjTXTTW3e0': 'docs/roles.md',
+  // Club Offering → The Pitch page
+  '11odd_FP2wLXZOGLoNw1y8upnEfUBXVrq3JNnOenZSJ4':  'docs/pitch.md',
+  // Toastmaster Checklist (static content; interactivity added in Phase D)
+  '1X7Z86L2b7jwmTZ2YC59FZY6sGESKVyZIoobmAFj_ceI': 'docs/checklist.md',
+  // Committee Role Expectations (Phase B task 4 — doc to be authored)
   // 'PASTE_COMMITTEE_ROLES_DOC_ID':      'docs/committee-roles.md',
 };
 
@@ -121,7 +122,7 @@ function publishNow(docId) {
  *   4. Check the execution log output against the live roles.md.
  */
 function protoConvertRoleGuide() {
-  var DOC_ID = 'PASTE_ROLE_GUIDE_DOC_ID_HERE';
+  var DOC_ID = '1c-_XD32gXbSiElJUc99GAyZUq_Ywq02uBAjTXTTW3e0';
 
   Logger.log('Opening doc...');
   var doc = DocumentApp.openById(DOC_ID);
