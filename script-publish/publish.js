@@ -109,6 +109,33 @@ function publishNow(docId) {
   Logger.log('Commit: ' + (url || 'OK'));
 }
 
+// ── Test helpers — push specific Docs to the test branch ─────────────────────
+
+/**
+ * Publish the Role Guide to the test branch for diff review.
+ * Set GITHUB_BRANCH = 'test/publish-pipeline' in Script Properties first.
+ */
+function testPublishRoleGuide() {
+  publishNow('1c-_XD32gXbSiElJUc99GAyZUq_Ywq02uBAjTXTTW3e0');
+}
+
+/** Publish the Club Offering (Pitch) to the test branch. */
+function testPublishPitch() {
+  publishNow('11odd_FP2wLXZOGLoNw1y8upnEfUBXVrq3JNnOenZSJ4');
+}
+
+/** Publish the Toastmaster Checklist to the test branch. */
+function testPublishChecklist() {
+  publishNow('1X7Z86L2b7jwmTZ2YC59FZY6sGESKVyZIoobmAFj_ceI');
+}
+
+/** Publish all three Docs to the test branch in one go. */
+function testPublishAll() {
+  testPublishRoleGuide();
+  testPublishPitch();
+  testPublishChecklist();
+}
+
 // ── PROTOTYPE — run this first to validate the converter ─────────────────────
 /**
  * Convert the Role Guide Doc and log the Markdown output.
@@ -161,6 +188,30 @@ function docToMarkdown_(doc) {
   var lines       = [];
   var prevBlank   = false;
   var listCounters = {}; // nestingLevel → ordered list counter
+
+  // ── Pass 1: collect H1 headings for the auto-generated inline TOC ─────────
+  // The Doc's native TOC element is skipped (it can drift out of sync).
+  // We rebuild it from the actual headings so it's always accurate.
+  var tocEntries = []; // { text, anchor }
+  for (var t = 0; t < numChildren; t++) {
+    var el = body.getChild(t);
+    if (el.getType() === DocumentApp.ElementType.PARAGRAPH) {
+      var p = el.asParagraph();
+      if (p.getHeading() === DocumentApp.ParagraphHeading.HEADING1) {
+        var headingText = p.getText().trim();
+        if (headingText) {
+          // Derive the GitHub/MkDocs anchor: lowercase, non-alphanumeric → hyphen,
+          // collapse hyphens, strip leading/trailing hyphens.
+          var anchor = headingText.toLowerCase()
+            .replace(/[^\w\s-]/g, '')   // strip special chars (except hyphens)
+            .replace(/[\s_]+/g, '-')    // spaces/underscores → hyphens
+            .replace(/-+/g, '-')        // collapse multiple hyphens
+            .replace(/^-+|-+$/g, '');   // trim leading/trailing hyphens
+          tocEntries.push({ text: headingText, anchor: anchor });
+        }
+      }
+    }
+  }
 
   for (var i = 0; i < numChildren; i++) {
     var child = body.getChild(i);
@@ -215,6 +266,26 @@ function docToMarkdown_(doc) {
       }
 
       if (hashes) {
+        // Blank styled paragraph (e.g. empty H2 used as spacer) → blank line only
+        if (!inlineText.trim()) {
+          if (!prevBlank) { lines.push(''); prevBlank = true; }
+          continue;
+        }
+        // Before the first H1, inject the auto-generated TOC
+        if (hashes === '# ' && tocEntries.length > 0) {
+          // Check we haven't already emitted the TOC
+          var tocAlreadyEmitted = lines.some(function(l) { return l.indexOf('<!-- toc -->') >= 0; });
+          if (!tocAlreadyEmitted) {
+            if (!prevBlank) lines.push('');
+            lines.push('<!-- toc -->');
+            tocEntries.forEach(function(entry) {
+              lines.push('- [' + entry.text + '](#' + entry.anchor + ')');
+            });
+            lines.push('<!-- /toc -->');
+            lines.push('');
+            prevBlank = true;
+          }
+        }
         // Ensure a blank line before headings (except at start of document)
         if (lines.length > 0 && !prevBlank) { lines.push(''); }
         lines.push(hashes + inlineText);
@@ -249,13 +320,21 @@ function docToMarkdown_(doc) {
   var md = lines.join('\n');
 
   // ── Post-processing ────────────────────────────────────────────────────────
+  // 0. Strip carriage returns (\r) — Google Docs sometimes embeds Windows
+  //    line endings; ^M chars appear in the rendered output without this.
+  md = md.replace(/\r/g, '');
+
   // 1. Strip [imageN] placeholders (e.g. [image1], [image12])
   md = md.replace(/\[image\d+\]/gi, '');
 
-  // 2. Collapse 3+ consecutive blank lines → 2 (one blank line between blocks)
+  // 2. Strip bold/italic whitespace-only artifacts from empty styled paragraphs
+  //    e.g. "** **", "* *", "*** ***" — visually blank lines in the Doc
+  md = md.replace(/^\*{1,3}\s+\*{1,3}$/gm, '');
+
+  // 3. Collapse 3+ consecutive blank lines → 2 (one blank line between blocks)
   md = md.replace(/\n{3,}/g, '\n\n');
 
-  // 3. Remove trailing whitespace on each line
+  // 4. Remove trailing whitespace on each line
   md = md.split('\n').map(function(l) { return l.replace(/\s+$/, ''); }).join('\n');
 
   return md.trim() + '\n';
@@ -267,6 +346,8 @@ function docToMarkdown_(doc) {
  */
 function headingPrefix_(heading) {
   var H = DocumentApp.ParagraphHeading;
+  if (heading === H.TITLE)    return '# ';   // Google Docs "Title" style → H1
+  if (heading === H.SUBTITLE) return '## ';  // Google Docs "Subtitle" style → H2
   if (heading === H.HEADING1) return '# ';
   if (heading === H.HEADING2) return '## ';
   if (heading === H.HEADING3) return '### ';
@@ -290,7 +371,12 @@ function paraInlineToMd_(para) {
     }
     // InlineImage, Equation, etc. — skipped
   }
-  return result;
+
+  // Convert soft line breaks (Shift+Enter in Google Docs = \n inside a single
+  // paragraph element) to Markdown hard line breaks (two trailing spaces + \n).
+  // Without this, consecutive lines like a committee list collapse into one line
+  // because Markdown ignores single newlines.
+  return result.replace(/\n/g, '  \n');
 }
 
 /**
