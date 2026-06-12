@@ -356,6 +356,28 @@
       border-bottom: 1px solid var(--border);
     }
 
+    /* ── Resource cards ────────────────────────────── */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .resource-card {
+      display: block;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow .15s, border-color .15s;
+    }
+    .resource-card:hover { box-shadow: var(--shadow); border-color: var(--accent); }
+    .resource-title { font-weight: 700; font-size: 1rem; color: var(--primary); margin-bottom: 2px; }
+    .resource-alias { font-size: .75rem; color: var(--muted); margin-bottom: 10px; }
+    .resource-desc  { font-size: .85rem; color: var(--text); margin-bottom: 14px; line-height: 1.5; }
+    .resource-link  { font-size: .8rem; color: var(--accent); font-weight: 600; }
+
     /* ── Responsive ────────────────────────────────── */
     @media (max-width: 640px) {
       main { padding: 16px 12px; }
@@ -411,6 +433,9 @@
     <a class="nav-link" onclick="showView('errors')" id="nav-errors">
       <span>Errors</span>
       <span class="badge" id="badge-errors" style="display:none">0</span>
+    </a>
+    <a class="nav-link" onclick="showView('resources')" id="nav-resources">
+      <span>Resources</span>
     </a>
     <a class="nav-link" onclick="signOut()" style="margin-left:8px">
       <span>Sign out</span>
@@ -589,6 +614,7 @@ function showView(view, data) {
     case 'dietary':     main.innerHTML = renderDietary();     break;
     case 'education':   main.innerHTML = renderEducation();   break;
     case 'errors':      main.innerHTML = renderErrors();      break;
+    case 'resources':   main.innerHTML = renderResources();   break;
     default: main.innerHTML = '<p>View not found.</p>';
   }
 }
@@ -1055,6 +1081,45 @@ function renderErrors() {
           <tbody>${rows.join('') || '<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:24px">No errors.</td></tr>'}</tbody>
         </table>
       </div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// RESOURCES VIEW
+// ══════════════════════════════════════════════════════════════════════════════
+
+function renderResources() {
+  const runbooks = [
+    {
+      title:       'President Handover',
+      alias:       'Supreme Chancellor',
+      description: 'Operational handover notes for the President / Supreme Chancellor role.',
+      url:         'https://docs.google.com/document/d/1dy3Z1Z1flT7tztdlveiwbtnMVvUktkonbauyHznkWp0/edit',
+    },
+    {
+      title:       'Treasurer Handover',
+      alias:       'Guardian of Credit',
+      description: 'Bank signatory steps, vendor contacts, automation links, and financial procedures.',
+      url:         'https://docs.google.com/document/d/1_eDxA9tOf-LoAIIOHshAUdlnW0JM0WS4Hi-zifuxlAc/edit',
+    },
+  ];
+
+  const cards = runbooks.map(r => `
+    <a class="resource-card" href="${r.url}" target="_blank" rel="noopener">
+      <div class="resource-title">${esc(r.title)}</div>
+      <div class="resource-alias">${esc(r.alias)}</div>
+      <div class="resource-desc">${esc(r.description)}</div>
+      <div class="resource-link">Open in Google Docs ↗</div>
+    </a>`).join('');
+
+  return `
+    <div class="card">
+      <h2>Committee Resources</h2>
+      <p style="color:var(--muted);font-size:.875rem;margin-bottom:20px">
+        Private handover runbooks — operational how-tos for each committee office.
+        These docs are committee-only and are never published to the public site.
+      </p>
+      <div class="resource-grid">${cards}</div>
     </div>`;
 }
 
