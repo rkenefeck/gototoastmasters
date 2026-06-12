@@ -1,11 +1,9 @@
 # GOTO Toastmasters club membership offering
 
-GOTO Toastmasters club membership offering
-
 ### The Legend
 
 Over the last decade, many of us have honed our skills in corporate Toastmasters clubs. The best meetings were conducted over formal dinners and in person. Rob & Leslie were having a conversation and thought, wouldn't it be nice if we could continue this entertaining and educational experience beyond an individual organisation while opening it up to a broader audience? So they set themselves a target date of May 4th.
-**…On May the 4th 2024 ****Rob Kenefeck and Leslie Shroot achieved their goal to establish a new Toastmasters dinner club ****GOTO Toastmasters!**
+**…On May the 4th 2024** **Rob Kenefeck and Leslie Shroot achieved their goal to establish a new Toastmasters dinner club** **GOTO Toastmasters!**
 
 ### About Toastmasters in General
 
@@ -51,16 +49,16 @@ One or more of the following to meet membership criteria for this Toastmasters c
 
 #### Initial
 
-Initial membership starting in**  May,October **for everyone even dual members (toastmasters members of more than 1 club)
+Initial membership starting in  **May,October** for everyone even dual members (toastmasters members of more than 1 club)
 Initial **6 months** (5 formal meals + minimum 2 special events)  : **$385**
-Initial **12 months **(10 formal meals + minimum 4 special events): **$725** (If you would like to invoice your current employer, a yearly membership may be easier)
+Initial **12 months** (10 formal meals + minimum 4 special events): **$725** (If you would like to invoice your current employer, a yearly membership may be easier)
 
 Your Toastmasters International membership will be paid until the next Toastmasters International renewal period (end of March or September) 6 or 12 months rounded down, remainder will be credited towards your first renewal
 
-Initial starting in** December,January, February,July** (8 formal meals + minimum 2 special events): **$580**
-Initial starting in** March,August** (7 formal meals + minimum 2 special events) : **$515**
-Initial starting in** April,September** (6 formal meals + minimum 2 special events) : **$450**
-Initial starting in** June,November** (4 formal meals + minimum special events) : **$320**
+Initial starting in **December,January, February,July** (8 formal meals + minimum 2 special events): **$580**
+Initial starting in **March,August** (7 formal meals + minimum 2 special events) : **$515**
+Initial starting in **April,September** (6 formal meals + minimum 2 special events) : **$450**
+Initial starting in **June,November** (4 formal meals + minimum special events) : **$320**
 
 #### Renewal
 
@@ -105,5 +103,6 @@ Leslie Shroot, DTM - Galactic Liaison Specialist
 Peggy Chou - Rebel Rhetorician
 Rob Kenefeck - Guardian of Credit
 Shamika Dharmasiri - Force Warden
-Rob Kenefeck - Immediate Past Supreme ChancellorLinkedin:[https://www.linkedin.com/company/goto-toastmasters/about/](https://www.linkedin.com/company/goto-toastmasters/about/)
+Rob Kenefeck - Immediate Past Supreme Chancellor
+Linkedin:[https://www.linkedin.com/company/goto-toastmasters/about/](https://www.linkedin.com/company/goto-toastmasters/about/)
 Email: [goto.toastmasters.committee@gmail.com](mailto:goto.toastmasters.committee@gmail.com)
