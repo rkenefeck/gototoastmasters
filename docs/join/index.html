@@ -320,14 +320,10 @@
     <h2>Join GOTO Toastmasters</h2>
     <p>Fill in your details below to apply for membership. A committee member will review your application and be in touch shortly with your invoice.</p>
 
-    <!-- Status messages -->
+    <!-- Success message (top — replaces form) -->
     <div id="msg-success" class="msg success">
       <strong>Application received!</strong><br>
       Thanks for applying to GOTO Toastmasters. We've received your application and a committee member will be in touch shortly to confirm your membership and send your invoice.
-    </div>
-    <div id="msg-error" class="msg error">
-      <strong>Something went wrong.</strong><br>
-      <span id="error-detail"></span> Please try again or email us at <a href="mailto:goto.toastmasters.committee@gmail.com">goto.toastmasters.committee@gmail.com</a>.
     </div>
 
     <form id="join-form" novalidate>
@@ -539,6 +535,12 @@
 
       <button type="submit" class="btn-submit" id="submit-btn">Submit membership application</button>
 
+      <!-- Error message — lives below the submit button so it's always on screen -->
+      <div id="msg-error" class="msg error">
+        <strong>Something went wrong.</strong><br>
+        <span id="error-detail"></span> Please try again or email us at <a href="mailto:goto.toastmasters.committee@gmail.com">goto.toastmasters.committee@gmail.com</a>.
+      </div>
+
     </form>
   </div>
 </main>
@@ -614,11 +616,16 @@
       return;
     }
 
+    function showError(msg) {
+      errTxt.textContent = msg + ' ';
+      msgErr.classList.add('visible');
+      msgErr.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     // Manual validation: badge preference (radio with default, always set)
     const badgePref = document.querySelector('input[name="badgePreference"]:checked');
     if (!badgePref) {
-      errTxt.textContent = 'Please select a badge preference.';
-      msgErr.classList.add('visible');
+      showError('Please select a badge preference.');
       return;
     }
 
@@ -626,8 +633,7 @@
     const billedTo = document.querySelector('input[name="invoiceBilledTo"]:checked').value;
     if (billedTo === 'company' && !document.getElementById('companyName').value.trim()) {
       document.getElementById('companyName').focus();
-      errTxt.textContent = 'Please enter a company or organisation name.';
-      msgErr.classList.add('visible');
+      showError('Please enter a company or organisation name.');
       return;
     }
 
@@ -696,8 +702,7 @@
       let data = {};
       try { data = await resp.json(); } catch (_) { /* non-JSON response — treat as success */ }
       if (data.status === 'error') {
-        errTxt.textContent = (data.message || 'An error occurred.') + ' ';
-        msgErr.classList.add('visible');
+        showError(data.message || 'An error occurred.');
         btn.disabled    = false;
         btn.textContent = 'Submit membership application';
       } else {
@@ -709,8 +714,7 @@
       const msg = err.name === 'AbortError'
         ? 'The request timed out after 30 seconds.'
         : err.message;
-      errTxt.textContent = msg + ' ';
-      msgErr.classList.add('visible');
+      showError(msg);
       btn.disabled    = false;
       btn.textContent = 'Submit membership application';
     }
