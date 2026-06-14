@@ -409,6 +409,15 @@
       </div>
 
       <div class="field">
+        <label>Membership term <span class="req">*</span></label>
+        <div class="radio-group" style="margin-top:8px">
+          <label><input type="radio" name="termLength" value="6month" checked> 6 months</label>
+          <label><input type="radio" name="termLength" value="12month"> 12 months</label>
+        </div>
+        <p class="hint">6-month memberships cover 5 formal dinners + 2 special events. 12-month covers 10 formal dinners + 4 special events. See <a href="/pitch/#the-price" target="_blank">pricing</a> for details.</p>
+      </div>
+
+      <div class="field">
         <label>Badge preference <span class="req">*</span></label>
         <div class="radio-group" style="margin-top:8px">
           <label><input type="radio" name="badgePreference" value="Magnetic" checked> Magnetic</label>
@@ -519,6 +528,12 @@
         <label for="linkedinUrl">LinkedIn profile URL</label>
         <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/yourname">
         <p class="hint">Optional. Helps the committee verify your identity and connect with you.</p>
+      </div>
+
+      <div class="field">
+        <label for="comments">Comments / requests</label>
+        <textarea id="comments" name="comments" rows="3" placeholder="e.g. I'd like to discuss a 12-month membership, or any other notes for the committee."></textarea>
+        <p class="hint">Optional. Include any special requests, such as a 12-month membership term, and the committee will follow up before sending your invoice.</p>
       </div>
 
       <!-- ── Terms ──────────────────────────────────────── -->
@@ -656,6 +671,7 @@
 
       // Joining
       joinMonth:          fd.get('joinMonth'),
+      termLength:         fd.get('termLength') || '6month',
       badgePreference:    fd.get('badgePreference'),
 
       // Billing
@@ -679,6 +695,9 @@
       referralSource:     fd.get('referralSource') || '',
       referredBy:         fd.get('referredBy') || '',
       linkedinUrl:        fd.get('linkedinUrl') || '',
+
+      // Comments
+      comments:           fd.get('comments') || '',
 
       // Terms
       agreeToTerms:       fd.get('agreeToTerms') === 'on',
