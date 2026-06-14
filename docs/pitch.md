@@ -12,37 +12,56 @@ We are a toastmasters club, part of Toastmasters International, a nonprofit educ
 ### Membership Criteria
 
 One or more of the following to meet membership criteria for this Toastmasters club
+
 - Completed Level 3 for a toastmasters path
+
 - 8 year professional IT experience
+
 - 4 years consulting experience
 
 ### The Target Audience
 
 - Do you enjoy hanging out with fellow IT and Consulting professionals?
+
 - Do you want to work on your oral communication skills?
+
 - Do you like networking? (Who doesn’t)
+
 - Do you have existing seniority skills and Toastmasters experience?
+
 - Do you want to practise running professional events?
 
 ### The Offering
 
 - We plan to hold monthly meetings held at dinner time. Food is included in the membership price as part of our Self Education Seminar.
   - GOTO Toastmasters all inclusive membership is designed to be both a professional membership and an all inclusive education program
+
 - 6 monthly membership commitment
+
 - 5 Dinner Events,  (monthly excluding December and January) and 2 special meetings every 6 months
+
 - Formal Toastmasters qualifications
+
 - Access to Toastmasters educational material
+
 - Minimum 14 meetings a year (10 formal sit down dinners and 4 special events)
+
 - Special events are things like end of year catchup, family day, contests, speechathon
+
 - The meeting will be approximately monthly on Tuesday Evening in Melbourne CBD (which week of the month varies)
 
 ### Meeting timing for formal dinner / info
 
 - Always Tuesday in CBD location (currently we have been using the mail exchange hotel for the formal dinner meetings)
+
 - Pre meeting social and getting ready from 5:30pm
+
 - Seat taken by 6pm
+
 - Formal close 9pm (we try very hard to hit this time - latest we have finished is 9:05pm)
+
 - Post meeting social until late
+
 - Ideally everyone attends the entire meeting but sometimes life gets in the way, if you are only able to attend a partial meeting just let the toastmaster know so you are only assigned appropriate roles
 
 ### The Price
@@ -71,7 +90,7 @@ Renewal 12 months(10 formal meals + minimum 4 special event) : $680
 
 ### What do I need to do to get involved
 
-If you would like to commit or simply register your interest, please respond to our google form [GOTO Toastmasters Signup Form](https://forms.gle/5sJZDsEiTQ4vZudH7)
+If you would like to commit or simply register your interest, please respond to our google form [GOTO Toastmasters Signup Form](gototoastmaster.com.au/Join)
 
 ### What if I want to come along as a guest and check it out
 
