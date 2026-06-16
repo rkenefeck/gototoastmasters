@@ -575,7 +575,7 @@
     const now = new Date();
     for (let i = 0; i < 9; i++) {
       const d     = new Date(now.getFullYear(), now.getMonth() + i, 1);
-      const value = d.toISOString().slice(0, 7); // 'YYYY-MM'
+      const value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); // 'YYYY-MM' (local, not UTC)
       const label = d.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
       const opt   = document.createElement('option');
       opt.value   = value;
