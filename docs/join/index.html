@@ -548,6 +548,10 @@
         </label>
       </div>
 
+      <!-- Honeypot: hidden from real users; bots fill it; server silently discards such submissions -->
+      <input type="text" name="website" id="hp-website" tabindex="-1" autocomplete="off"
+             style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">
+
       <button type="submit" class="btn-submit" id="submit-btn">Submit membership application</button>
 
       <!-- Error message — lives below the submit button so it's always on screen -->
@@ -568,6 +572,7 @@
 <script>
   // ── CONFIG ─────────────────────────────────────────────────────────────
   const WEBAPP_URL   = 'https://script.google.com/macros/s/AKfycbwJDm5DcJ3Emm5Q1Gf5mKEzLwZBHcXEetxb1XEGc1Z1q-8hJOdC9mox2LeIG07lP1AnxQ/exec';
+  const PAGE_RENDERED_AT = Date.now(); // timing check: bots submit near-instantly
 
   // ── POPULATE JOIN MONTH SELECT ─────────────────────────────────────────
   (function populateJoinMonths() {
@@ -701,6 +706,10 @@
 
       // Terms
       agreeToTerms:       fd.get('agreeToTerms') === 'on',
+
+      // Abuse controls
+      website:            fd.get('website') || '',   // honeypot — real users leave blank
+      renderedAt:         PAGE_RENDERED_AT,           // timing check
     };
 
     btn.disabled    = true;
