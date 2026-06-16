@@ -841,7 +841,7 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
     </div>` : ''}
     ${invoice
       ? `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">
-           Invoice #${esc(invoice.invoice_no_ || invoice.invoice_number_ || invoice._invoice_number || '')} generated.
+           Invoice #${esc(invoice.invoice_number || invoice.invoice_number_ || invoice.invoice_no_ || '')} generated.
            ${invoice.invoice_link
              ? `<a href="${esc(invoice.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>`
              : ''}
@@ -939,7 +939,7 @@ function renderMemberManagement(m, invoice, onboarding, isLapsed) {
       const lines = transactionsList.filter(t => (t.email || '').toLowerCase() === memberEmail);
       return `
         <p style="font-size:.8rem;color:var(--muted);margin:8px 0 4px">
-          Invoice #${esc(inv.invoice_no_ || inv.invoice_number_ || '')}
+          Invoice #${esc(inv.invoice_number || inv.invoice_number_ || inv.invoice_no_ || '')}
           ${inv.invoice_link ? `<a href="${esc(inv.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>` : ''}
         </p>
         <table class="invoice-lines">
