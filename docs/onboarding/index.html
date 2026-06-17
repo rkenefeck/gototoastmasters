@@ -889,14 +889,16 @@ function renderMemberManagement(m, invoice, onboarding, isLapsed) {
   const isActive    = norm(m.status) === 'active';
 
   const checklistSteps = [
-    { key: 'club_central_registered', label: 'Club Central registered',  col: 'Club Central Registered' },
-    { key: 'club_central_paid',       label: 'Club Central paid',        col: 'Club Central Paid' },
-    { key: 'whatsapp_added',          label: 'Added to WhatsApp',        col: 'WhatsApp Added' },
-    { key: 'calendar_invited',        label: 'Google Calendar invited',  col: 'Calendar Invited' },
-    { key: 'easy_speak_linked',       label: 'Easy-Speak linked',        col: 'Easy-Speak Linked' },
-    { key: 'badge_made',              label: 'Badge ordered',            col: 'Badge Made' },
-    { key: 'invoice_sent',            label: 'Invoice sent',             col: 'Invoice Sent' },
-    { key: 'onboarding_complete',     label: 'Onboarding complete',      col: 'Onboarding Complete' },
+    { key: 'club_central_registered',    label: 'Club Central registered',   col: 'Club Central Registered' },
+    { key: 'club_central_paid',          label: 'Club Central paid',         col: 'Club Central Paid' },
+    { key: 'whatsapp_added',             label: 'Added to WhatsApp',         col: 'WhatsApp Added' },
+    { key: 'calendar_invited',           label: 'Google Calendar invited',   col: 'Calendar Invited' },
+    { key: 'easy_speak_linked',          label: 'Easy-Speak linked',         col: 'Easy-Speak Linked' },
+    { key: 'badge_made',                 label: 'Badge ordered',             col: 'Badge Made' },
+    { key: 'invoice_sent',               label: 'Invoice sent',              col: 'Invoice Sent' },
+    { key: 'member_goals_discussion',    label: 'Member goals discussion',   col: 'Member Goals Discussion' },
+    { key: 'linkedin_follow_connection', label: 'LinkedIn follow/connection', col: 'LinkedIn Follow/Connection' },
+    { key: 'onboarding_complete',        label: 'Onboarding complete',       col: 'Onboarding Complete' },
   ];
 
   const checklistHtml = hasPaidDate
