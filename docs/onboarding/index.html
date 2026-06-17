@@ -841,7 +841,7 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
     </div>` : ''}
     ${invoice
       ? `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">
-           Invoice #${esc(invoice.invoice_no_)}.
+           Invoice #${esc(invoice.invoice_number)}.
            ${invoice.pdf_status === 'Failed'
              ? `<span style="color:var(--error);font-weight:600;margin-left:8px">⚠ PDF generation failed</span>`
              : invoice.pdf_status === 'Queued' || invoice.pdf_status === 'Generating'
@@ -947,7 +947,7 @@ function renderMemberManagement(m, invoice, onboarding, isLapsed) {
       const lines = transactionsList.filter(t => (t.email || '').toLowerCase() === memberEmail);
       return `
         <p style="font-size:.8rem;color:var(--muted);margin:8px 0 4px">
-          Invoice #${esc(inv.invoice_no_)}
+          Invoice #${esc(inv.invoice_number)}
           ${inv.invoice_link ? `<a href="${esc(inv.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>` : ''}
         </p>
         <table class="invoice-lines">
