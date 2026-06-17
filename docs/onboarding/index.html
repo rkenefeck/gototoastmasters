@@ -841,10 +841,14 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
     </div>` : ''}
     ${invoice
       ? `<p style="font-size:.8rem;color:var(--muted);margin-bottom:8px">
-           Invoice #${esc(invoice.invoice_number || invoice.invoice_number_ || invoice.invoice_no_ || '')} generated.
-           ${invoice.invoice_link
-             ? `<a href="${esc(invoice.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>`
-             : ''}
+           Invoice #${esc(invoice.invoice_number || invoice.invoice_number_ || invoice.invoice_no_ || '')}.
+           ${invoice.pdf_status === 'Failed'
+             ? `<span style="color:var(--error);font-weight:600;margin-left:8px">⚠ PDF generation failed</span>`
+             : invoice.pdf_status === 'Queued' || invoice.pdf_status === 'Generating'
+               ? `<span style="color:var(--muted);margin-left:8px">⏳ PDF generating…</span>`
+               : invoice.invoice_link
+                 ? `<a href="${esc(invoice.invoice_link)}" target="_blank" rel="noopener" style="margin-left:8px">View PDF →</a>`
+                 : ''}
          </p>
          <table class="invoice-lines">
            <thead><tr><th>SKU</th><th style="text-align:right">Qty</th></tr></thead>
@@ -863,10 +867,14 @@ function renderApplicationReview(m, invoice, onboarding, googleSearch, name) {
     <div class="action-bar">
       <button class="btn btn-danger btn-sm" onclick="rejectMember('${esc(m.email)}')">Reject</button>
       <div class="spacer"></div>
+      ${invoice && invoice.pdf_status === 'Failed'
+        ? `<button class="btn btn-ghost btn-sm" onclick="retryInvoicePdf('${esc(m.email)}')">Retry PDF</button>`
+        : ''}
       <button class="btn btn-ghost btn-sm" onclick="generateInvoiceFlow('${esc(m.email)}')">Amend Invoice</button>
       <button class="btn btn-success"
         onclick="approveAndSend('${esc(m.email)}')"
-        ${isPendingReview ? 'disabled title="Resolve membership category first"' : ''}>
+        ${isPendingReview ? 'disabled title="Resolve membership category first"' : ''}
+        ${invoice && (invoice.pdf_status === 'Queued' || invoice.pdf_status === 'Generating') ? 'title="PDF still generating — click to generate now and send"' : ''}>
         Approve &amp; Send Invoice
       </button>
     </div>`;
@@ -1126,6 +1134,19 @@ function renderResources() {
 // ══════════════════════════════════════════════════════════════════════════════
 // ACTIONS
 // ══════════════════════════════════════════════════════════════════════════════
+
+async function retryInvoicePdf(email) {
+  if (!confirm(`Retry PDF generation for ${email}?`)) return;
+  showLoading('Queuing PDF regeneration…');
+  try {
+    const result = await hubPost({ action: 'retryInvoicePdf', memberEmail: email });
+    if (result.error) throw new Error(result.error);
+    await refreshData();
+    showToast('Invoice queued for PDF regeneration. It will generate within ~1 minute.');
+  } catch (err) {
+    showError('Retry failed: ' + err.message);
+  }
+}
 
 async function approveAndSend(email) {
   if (!confirm(`Approve this application and send invoice to ${email}?`)) return;
