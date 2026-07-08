@@ -16,9 +16,11 @@ _This page updates automatically from the meeting schedule._
 
 ---
 
-## Regular
+## [Regular](https://www.eventbrite.com.au/e/goto-toastmasters-leadership-confidence-and-public-speaking-seminar-tickets-1990457933260)
 
-**Tuesday 11 August 2026** &nbsp;·&nbsp; 5:30 PM AEST &nbsp;·&nbsp; Melbourne CBD
+**Tuesday 25 August 2026** &nbsp;·&nbsp; 5:30 PM AEST &nbsp;·&nbsp; Melbourne CBD
+
+[Register on Eventbrite ↗](https://www.eventbrite.com.au/e/goto-toastmasters-leadership-confidence-and-public-speaking-seminar-tickets-1990457933260)
 
 ---
 
