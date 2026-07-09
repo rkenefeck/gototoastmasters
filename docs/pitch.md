@@ -68,25 +68,18 @@ One or more of the following to meet membership criteria for this Toastmasters c
 
 #### Initial
 
-Initial membership starting in  **May,October** for everyone even dual members (toastmasters members of more than 1 club)
-Initial **6 months** (5 formal meals + minimum 2 special events)  : **$385**
-Initial **12 months** (10 formal meals + minimum 4 special events): **$725** (If you would like to invoice your current employer, a yearly membership may be easier)
+Initial membership **$45 signup fee** (People with existing toastmasters international IDs this fee will be waved)
+Initial **6 months** (5 formal meals + minimum 2 special events)  : **$340 + $45**
+Initial **12 months** (10 formal meals + minimum 4 special events): **$680 + $45**
+ (If you would like to invoice your current employer, a yearly membership may be easier)
 
 Your Toastmasters International membership will be paid until the next Toastmasters International renewal period (end of March or September) 6 or 12 months rounded down, remainder will be credited towards your first renewal
-
-Initial starting in **December,January, February,July** (8 formal meals + minimum 2 special events): **$580**
-Initial starting in **March,August** (7 formal meals + minimum 2 special events) : **$515**
-Initial starting in **April,September** (6 formal meals + minimum 2 special events) : **$450**
-Initial starting in **June,November** (4 formal meals + minimum special events) : **$320**
 
 #### Renewal
 
 Renewal 6 months (5 formal meals + minimum 2 special event): $340
 Renewal 12 months(10 formal meals + minimum 4 special event) : $680
 *Renewals are due in March and September
-*If your initial period did not align with a standard renewals period your first renewal will be worked out pro-rata - this will be displayed on your invoice
-*Renewals will be sent out automatically in August and February
-*If you join December-April or August-September pro-rata will be added on top of initial membership invoice hence the above options
 
 ### What do I need to do to get involved
 
@@ -117,7 +110,7 @@ Please feel free to invite others to join this venture!
 **GOTO Toastmasters Council**
 Wing Siu - Supreme Chancellor
 Stephen Jasper - Jedi Journey Guide
-Jackson Green - Force Recruitment Officer
+Natali Burgio - Force Recruitment Officer
 Leslie Shroot, DTM - Galactic Liaison Specialist
 Peggy Chou - Rebel Rhetorician
 Rob Kenefeck - Guardian of Credit
