@@ -59,19 +59,29 @@ The point of this role is to run the entire evaluation part of the meeting and C
 
 **Improving the process**  **while overseeing the execution.**
 AS the GOTO Toastmaster sessions are longer than many clubs, the responsibilities for General Evaluator have been separated down between Evaluation Coordinator and General Evaluator.
+
 - Evaluating everything that takes place during the club meeting
 This includes evaluating everything from the preparations for the meeting to what occurred on that day, upto and including the Evaluation Coordinator.
 Your final task *before* the meeting is to prepare a brief verbal explanation detailing:
+
 - The purpose, techniques and benefits of evaluation so guests and new members will better understand the function of evaluations.
+
 - How evaluation is a positive experience designed to help people overcome flaws and reinforce good habits in their presentations.
 On meeting day:
+
 - Arrive early. This is so you can evaluate everything that happens before the meeting starts.
+
 - Use the full agenda you are provided as a checklist, and take notes on everything that happens (or doesn’t, but should). For example: Is the club’s property (e.g. trophies, banner, educational material) properly displayed? Were there unnecessary distractions that could have been avoided? Did the meeting, and each segment of it, begin and end on time?
+
 - It is really important to remember to evaluate components that have **not** been evaluated (i.e. speech evaluators have already evaluated the speeches, so you can evaluate the evaluators) rather than rehashing people's speeches etc. Include the auxiliary roles in this evaluation.
 Study each participant on the program, from the person giving the invocation or thought for the day to the last report by the timer. Look for good and less than desirable examples of preparation, organization, delivery, enthusiasm, observation and general performance of duties. During the evaluation portion of the meeting, the Evaluation Coordinator will call on you when it is time to give your general evaluation of the meeting:
+
 - Use your agenda/checklist and the notes you took during the meeting.
+
 - Phrase your evaluation so it is helpful, encouraging and motivates club members to implement the suggestions.
+
 - You may wish to comment on the quality of evaluations. Were they positive, upbeat, helpful? Did they point the way to improvement?
+
 - When you’ve completed your evaluation, return control of the meeting to the Toastmaster.
 Being general evaluator is a big responsibility and it is integral to the success of every single club member. People join Toastmasters because they have a goal – they want to learn something. The club is where they learn. If the learning environment isn’t focused and fun, members won’t learn what they joined to learn. Your observations and suggestions help ensure the club is meeting the goals and needs of each member.
 And what do *you* get out of the deal? You get the chance to practice and improve your skills in critical thinking, planning, preparation and organization, time management, motivation and team building!
@@ -83,22 +93,32 @@ Find the specific evaluation form for each of the speakers and look at them. (sh
 
 **The syntax sentinel**  **Before the Meeting** One benefit of Toastmasters is that it helps people improve their grammar and word use. Being a grammarian also provides an exercise in expanding listening skills. You have several responsibilities: to introduce new words to members, to comment on language usage during the course of the meeting, and to provide examples of eloquence.
 Several days before the meeting, **select a "word of the day"** and update EasySpeak with that word:
+
 - It should be a word that will help members increase their vocabulary - a word that can be incorporated easily into everyday conversation but is different from the way people usually express themselves.
+
 - Adjectives and adverbs are more adaptable than nouns or verbs, but feel free to select your own special word.
+
 - Prepare to orally give a definition of the word and an example of its usage to present in your 1 minute introduction at the beginning of the meeting
+
 - Make sure the word relates to the theme of the meeting
+
 - Put the word in easy-speak so it can be printed on the agenda
 
 **At the Meeting** Ideally, **write your word on the board** when you get up to do your introduction. Also, get a blank piece of paper and pen ready to make notes. (at our venue not usually somewhere to write it but printed on a few pieces of paper around the room usually does the job - worst case it is on the agenda)
 When introduced:
+
 - Announce the word of the day, state its part of speech, define it, use it in a sentence and ask that anyone speaking during any part of the meeting use it.
+
 - Briefly explain the role of the grammarian in one sentence.
 Throughout the meeting, listen to everyone’s word usage. Write down any awkward use or misuse of the language (incomplete sentences, sentences that change direction in midstream, incorrect grammar or malapropisms) with a note of who erred. For example, point out if someone used a singular verb with a plural subject. “One in five children wear glasses” should be “one in five children wears glasses.” Note when a pronoun is misused. “No one in the choir sings better than her” should be “No one in the choir sings better than she.”
 Look for missed opportunities - if someone could have used a perfect word in a situation, but didn’t, you should include this to let them know for next time.
 Write down who used the word of the day (or a derivative of it) and note those who used it correctly or incorrectly.
 When called on by the general evaluator during the evaluation segment:
+
 - Go to the podium and **shake the general evaluator’s hand**
+
 - Try to offer the correct usage in every instance of misuse (instead of merely announcing that something was wrong).
+
 - Report on creative language usage and announce who used the word of the day (or a derivative of it) correctly or incorrectly.
 
 # TABLE TOPICS™ Speaker
@@ -117,12 +137,19 @@ Now, take a deep breath and get ready to be *remark*able!
 No doubt you’ve guessed that the speaking program is the centre of every Toastmasters meeting. After all, what’s Toastmasters without the talking? But members don’t just stand up and start yakking. They use the guidelines in the *Competent Communication* (CC) manual and the *Advanced Communication Series* (ACS) manuals to fully prepare their presentations.
 The CC manual speeches usually last 5-7 minutes. ACS manual project speeches are 5-7 minutes or longer depending upon the assignment.
 Every speaker is a role model and club members learn from one another’s speeches. Prepare and rehearse to ensure you present the best speech possible. Don’t insult your fellow club members by delivering a poorly prepared speech. However, it’s also true that no speech is perfect. So, get out there and try! Here’s what to do:
+
 - **Check your club’s meeting schedule regularly** to find out when you’re assigned to speak. Begin working on the speech at least a week in advance. That way, you have enough time to devote to research, organization and rehearsal.
+
 - **If you don’t write your own speech introduction, make sure the Toastmaster of the meeting prepares a good one for you.**
+
 - **Several days before the meeting, ask the general evaluator for your evaluator’s name.** Talk with your evaluator about the speech you’ll give. Discuss your speech goals and personal concerns. Let your evaluator know where you believe your speech ability needs strengthening, so he or she can pay special attention to those aspects of your presentation. Remember to bring your manual to the meeting.
+
 - **You should arrive at the meeting early** to check the microphone, lighting and anything else that could malfunction and ruin your talk. Give your manual to your evaluator before the meeting starts and discuss any last-minute issues with him or her. Sit near the front of the room and carefully plan your approach to the lectern and your speech opening.
+
 - **During the meeting, give your full attention to the speakers at the lectern.** Don’t study your speech notes while someone else is talking. When you’re introduced, smoothly and confidently leave your chair and walk to the lectern. After your speech, wait for the Toastmaster to return to the lectern, then return to your seat. Listen intently during your evaluation for helpful hints that will assist in building better future talks.
+
 - **After the meeting, reclaim your manual from your evaluator.** Discuss any questions you may have concerning your evaluation to clarify and avoid any misinterpretations.
+
 - **Finally, have the vice president education (VPE) initial the Project Completion Record in the back of your manual.**
 You’ll enjoy a growing sense of confidence as you repeat these steps with new speech projects. Don’t be afraid to do the work, enjoy the applause and reap the educational benefits. Your courage will be rewarded!
 
@@ -130,22 +157,36 @@ You’ll enjoy a growing sense of confidence as you repeat these steps with new 
 
  A timer’s job is to keep the meeting running on time and making sure people complete their speeches in the allotted time.
 Here’s how to succeed as timer:
+
 - Green is the minimum amount of time, orange is mid way, and red is the scheduled maximum amount of time that a speaker has to finish their talk.
+
 - Some items just have a timing for Red - like Grammarian introduction (1 minute), speech evaluation introduction (1 minute)
+
 - Before the meeting, check out the agenda and see when you will need to show the green/yellow/red signals for each speaker
+
 - On meeting day, retrieve the timing equipment from the sergeant at arms. Use your phone timer and to do the timing.
+
 - Throughout the meeting, listen carefully to each program participant and signal them.
+
 - If someone goes more than 30 seconds over, make sure to tell them orally.
+
 - When giving the report, get up to the stage and shake the general evaluator’s hand. You don’t have to report everyone’s times, but only the outliers and generally how the speakers went
+
 - Remember to **continue timing after you have given your report**, for the rest of the meeting
+
 - Get someone else to do the timing if you are called up for a table topic or when you’re doing the timer’s report
+
 - After the meeting, let individuals know their exact time if they ask you
+
 - It’s sometimes hard to provide a new spin on timing in the Timer role, and you only have 1 minute to deliver your report. It’s worth picking up on a specific aspect of timing in the meeting (why people went over time, how long people spent on the preamble of their speeches etc) and try to provide a specific insight on the speakers of the meeting that you could only make with the help of a stopwatch.
 
 How to time table topics:
+
 - Write down each table topic speaker and time them at 1 minute for Green, 1.5 minutes for Yellow and 2 minutes for Red
+
 - At 2.5 minutes you can verbally let them know they have to stop talking
-- Indicate to the table topics master when there is only time for one more question - table topics always has a minimum of three speakers and should always finish on schedule. If you are running early, have more table topics speakers than usual. Around 4 minutes before the general evaluation section is due to begin, you should notify the table topics master that this will be the last table topics speaker. If there are 2 minutes or less to the general eval section, there will be no more new speakers.
+
+- Indicate to the table topics master when there is only time for one more question - table topics always has a minimum of three speakers and should always finish on schedule. If you are running early, have more table topics speakers than usual. Around 4 minutes before the recap and vote is due to begin, you should notify the table topics master that this will be the last table topics speaker. If there are 2 minutes or less to the general eval section, there will be no more new speakers.
 
 Link to timer backgrounds from toastmasters [ ](https://www.toastmasters.org/resources/timer-zoom-backgrounds)[https://www.toastmasters.org/resources/timer-zoom-backgrounds](https://www.toastmasters.org/resources/timer-zoom-backgrounds)
 
@@ -154,30 +195,24 @@ Link to timer backgrounds from toastmasters [ ](https://www.toastmasters.org/res
 Our club has a loose Star Wars theme throughout the whole meeting, part of that is in our unique timing lights - which are Timing Lightsabers!
 Timer and Assistant Timer will be sat next to each other, are you are asked to take note of all the times. You have 4 mins right near the end to work together on what the Timer is going to say in the oral report
 We do have backup cards in case of any problems with Lightsabers.
-OG Lightsabers
-- How to go straight to red
-  - Hold button for 3 seconds  until light goes on and release (light goes on release)
-- How to go straight to green
-  - Hold button for 3 seconds until light goes on
-  - Release and press 1 more time
-- How to go from green to Amber
-  - If on tap button twice
-- How to go from Amber to Red
-  - Tap 4 times
-- How to switch off
-  - Hold button for 3 seconds until it switches off
 Usbc Lightsavers
+
 - How to go straight to red
   - Press button (.5 seconds)  until light goes on (blue)  and press once more (light goes red)
+
 - How to go straight to green
   - Press button (.5 seconds)  until light goes on (blue) about 10 seconds before needed
   - Release and press 2 more times (not too quickly it will be gree
+
 - How to go from green to Amber
   - 2 more clicks is amber
+
 - How to go from Amber to Red
   - 4 more times is red
+
 - More than 30 seconds over make it flash
   - Double tap (double tap also stops it flashing
+
 - How to switch off
   - Hold down button about 2 seconds until it switches off
 
@@ -192,10 +227,15 @@ Begin preparing for your role several days in advance. You can use the [Toastm
 Next, contact the general evaluator and make sure you’re both working from the same agenda. Ask the general evaluator to call other members of the evaluation team – speech evaluators, Topicsmaster, timer, grammarian, Ah-Counter – and remind them of their responsibilities. Remember, as the director, you’re responsible for ensuring all of the meeting’s players know their parts and hit their marks.
 To help the Topicsmaster, create a list of program participants already assigned a speaking role so he or she can call on others first.
 Introductions are brief and carefully planned and done by the evaluators. Contact speakers several days before the meeting to ask about:
+
 - Speech topic and title
+
 - Manual and project title
+
 - Assignment objectives
+
 - Speaker’s personal objectives
+
 - Delivery time
 You need all of these elements to create your introductions. Remember to keep the introductions between 30-60 seconds in length.
 For more information about introductions see [*When You’re the Introducer*](http://www.toastmasters.org/1167e)[ ](http://www.toastmasters.org/1167e)(Item 1167E) and *The Better Speaker Series* module [*Creating an Introduction*](http://www.toastmasters.org/277)[ ](http://www.toastmasters.org/277)(Item 277).
@@ -205,7 +245,9 @@ You and the speakers will need quick and easy access to the lectern. Direct the 
 When it’s time to start the program, the club president calls the meeting to order. Sometimes he or she will make announcements, introduce guests or conduct other club business before introducing you.
 When you’re introduced, the president will wait until you arrive at the lectern before being seated. (This is why you should sit at the front of the room.)
 Pay attention to the time. You are responsible for beginning and ending the meeting on time. You may have to adjust the schedule during the meeting to accomplish this. Make sure each meeting segment adheres to the schedule. If time allows, you can make some brief remarks about Toastmasters’ educational program for the benefit of guests and new members before you move forward with the introductions:
+
 - Introduce the general evaluator as you would any speaker. Remain standing near the lectern after your introduction until the speaker has assumed control of the lectern, then be seated. The general evaluator will introduce the other members of the evaluation team.
+
 - Introduce the Topicsmaster as you would any speaker. Remain standing near the lectern after your introduction until the speaker has assumed control of the lectern, then be seated.
 In some clubs it is customary for the Toastmaster and the person assuming control of the lectern to exchange a handshake. This isn’t required, but it’s sometimes done to help new members recognize when control of the lectern passes from the Toastmaster to the speaker and vice versa.
 After the Table Topics session has concluded, most clubs begin the speaking program. Introduce each speaker in turn.
@@ -220,27 +262,43 @@ Present trophies or ribbons as practiced by your club. Yep - Adjourn the meeting
 With TABLE TOPICS™, the Topicsmaster gives members who aren’t assigned a speaking role the opportunity to speak during the meeting. The Topicsmaster challenges each member with a subject, and the speaker responds with a one- to two-minute impromptu talk.
 Some people underestimate the Topicsmaster role’s importance. Not only does it provide you with an opportunity to practice planning, preparation, organization, time management and facilitation skills; your preparation and topic selection help train members to quickly organize and express their thoughts in an impromptu setting.
 Preparation is the key to leading a successful Table Topics session:
+
 - Several days before the meeting, check with the Toastmaster to find out if a theme meeting is scheduled. If so, prepare topics reflecting that theme.
+
 - Confirm who the prepared speakers, evaluators and general evaluator will be so you can call on other members at the meeting to respond first. You can call on program participants (speakers last) at the end of the topics session if time allows.
+
 - Select subjects and questions that allow speakers to offer opinions. Don’t make the questions too long or complicated and make sure they don’t require specialized knowledge.
+
 - Phrase questions so the speakers clearly understand what you want them to talk about.
 Remember, too, that your job is to give others a chance to speak, so keep your own comments short.
 Table Topics usually begins after the prepared speech presentations, but there are variations from club to club. Ask the Toastmaster or vice president education if you’re unsure of when your portion of the meeting begins.
 When the Toastmaster introduces you, walk to the lectern and assume control of the meeting:
+
 - Briefly state the purpose of Table Topics and mention any theme.
+
 - If your club has a word of the day, encourage speakers to use that word in their response.
+
 - Be certain everyone understands the maximum time they have for their response and how the timing device works (if the timer hasn’t already done so).
 Then begin the program:
+
 - Give each speaker a different topic or question and call on speakers at random.
+
 - Avoid going around the room in the order in which people are sitting.
+
 - Don’t ask two people the same thing unless you specify that each must give opposing viewpoints.
+
 - State the question briefly (to the entire room) – then call on a respondent.
+
 - You may wish to invite visitors and guests to participate after they have seen one or two members’ responses. But let visitors know they are free to decline if they feel uncomfortable.
+
 - Do not ask the TT evaluator to answer a question (for meetings without an assigned TT evaluator then the GE is the TT evaluator)
 Watch your total time. You may need to adjust the number of questions so your segment ends on time. Even if your portion started late, try to end on time to avoid the total meeting running overtime. At Servianites we finish Table topics on time as long as at least 3 questions have been asked. If the meeting is running behind time then there is less time for table topics. Prepare 8 questions as when the meeting is running to schedule there can be a lot of questions.
 If your club presents a best Table Topics speaker award:
+
 - After the last questions recap on who answered each question.
+
 - *We don’t do this bit, but some clubs ask the timer at the end of the Table Topics session to report those eligible for the award. Though the times vary among clubs, generally a participant is disqualified for stopping 15 seconds prior to the allowed time or speaking 15 seconds beyond the allowed limit.*
+
 - Ask members to vote for best Table Topics speaker and pass their votes to the sergeant at arms. Make sure you recap on who answered which question when you call for the vote.
 
 We have 2 table topic masters per standard meeting one during entree the other during mains. The end time for all the table topics is set so adjust the number of questions to ensure we finish on time.
@@ -248,7 +306,9 @@ We have 2 table topic masters per standard meeting one during entree the other d
 # Table Topics Evaluator
 
 This is a role that not all clubs do and for short meetings we tend to leave TT evaluations to the General Evaluator. There are 2 core approaches to giving the oral evaluation
+
 - *Go through each speaker 1 at a time a do a quick PIPS (praise improvement praise summary)*
+
 - *Give an overall evaluation of table topics with a large Praise, improvements across the speakers then more praise*
 
 *It is important to remember that accuracy of content is not the important part of Table Topics. It is more important to have a properly structured mini speech (intro, body, conclusion) and to look at all the aspects for a prepared speech evaluation (eye contact, audience engagement, body language, vocal variety, clarity, gestures, comfort level)*
@@ -275,7 +335,9 @@ This is officially a committee role but we share it because no one can attend al
 In the event that the S@A club officer cannot make the meeting then the role is open to all but ideally a committee member would take the main role.
 
 **Tasks:**
+
 - Day before: Check we have al the name’s tags (Currently Jordan have all of them)
+
 - On the Day:
   - Arrive 30 minutes early.
   - Check the microphone and sound at both ends is on.
@@ -302,6 +364,7 @@ In the event that the S@A club officer cannot make the meeting then the role is 
   - Make sure sign is setup
   - Make sure lightsabers have been given to Timers
   - Ensure Ahh Counters and Timers have sheets
+
 - During the meeting
   - Call meeting to order (Hammer the Gavel)
   - Call meeting back from break (including 2 min warning about restart)
@@ -312,23 +375,36 @@ In the event that the S@A club officer cannot make the meeting then the role is 
 # Vote Counter
 
 Before the meeting:
+
 - Go to https://admin.sli.do
  Username: [goto.toastmasters.committee@gmail.com](mailto:goto.toastmasters.committee@gmail.com)
 Password can be shared by president or previous vote counter at the time of need.
+
 - Check that this month Slido already exists. There should be 3 months worth into the future already pre-planned.
+
 - Populate the Best Evaluator quiz based on the Agenda. It’s much easier to do this on a computer in advance than trying to do it from a phone on the day!
+
 - Check that the Slido code is correct under settings; #GOTO25
+
 - Check that for each quiz, results are being hidden from participants as per the below picture:
+
 -
 During the meeting:
 
 - At the start of the meeting, log in to the admin view using the same username and password. At [https://admin.sli.do](https://admin.sli.do)
+
 - During Entree table topics, enter the name and memorable point for each speaker into the list, eg replacing the “Speaker 1” → “Rob K something funny”
+
 - When the table topics master is summarising the speakers, remove any unused template slots and make the quiz live using the green play button
+
 - When the Dinner Table Topics section starts, press the red stop on the Entree Table Topics and start to populate the Dinner Table Topics speakers as before.
+
 - When the last speaker has finished and the TableTopics master is giving the summary, press the green play button to start the voting.
+
 - When the Toastmaster hands over to the evaluation co-ordinator, end the Table Topics voting. If the voting numbers are low for either of the votes, let the President or Acting President know.
+
 - While the evaluators are evaluating, confirm no agenda changes have occurred and the slido is still accurate for the Evaluators.
+
 - During the final break, let the President or Acting President know the final results.
 
 # Harkmaster
