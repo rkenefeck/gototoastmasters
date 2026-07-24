@@ -1427,7 +1427,7 @@ function rowsToObjects(rows) {
   return rows.slice(1).map((row, i) => {
     const obj = { _rowNumber: i + 2 };
     headers.forEach((h, j) => {
-      obj[h.replace(/\W+/g, '_').toLowerCase()] = row[j] !== undefined ? row[j] : '';
+      obj[String(h).replace(/\W+/g, '_').toLowerCase()] = row[j] !== undefined ? row[j] : '';
     });
     return obj;
   }).filter(o => Object.values(o).some(v => v !== '' && v !== undefined));
