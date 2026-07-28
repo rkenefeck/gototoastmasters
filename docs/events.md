@@ -4,14 +4,6 @@ _This page updates automatically from the meeting schedule._
 
 [→ Agenda for our next meeting on Easy-Speak](https://easy-speak.org/view_meeting.php?c=13017&show=next)
 
-## Contest
-
-**Tuesday 28 July 2026** &nbsp;·&nbsp; 5:30 PM AEST &nbsp;·&nbsp; Melbourne CBD
-
-[View agenda on Easy-Speak ↗](https://easy-speak.org/view_meeting.php?t=636312)
-
----
-
 ## [Regular](https://www.eventbrite.com.au/e/goto-toastmasters-leadership-confidence-and-public-speaking-seminar-tickets-1990457933260)
 
 **Tuesday 25 August 2026** &nbsp;·&nbsp; 5:30 PM AEST &nbsp;·&nbsp; Melbourne CBD
